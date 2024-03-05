@@ -1,0 +1,1492 @@
+{
+	"info": {
+		"_postman_id": "2c58313e-7714-4aac-82fc-1aa945fbd9a4",
+		"name": "User",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23469470",
+		"_collection_link": "https://red-space-400771.postman.co/workspace/thriftex~c79ecd4c-06f8-4602-9b4f-edfd79e4f3d0/collection/23469470-2c58313e-7714-4aac-82fc-1aa945fbd9a4?action=share&source=collection_link&creator=23469470"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsIm5vX2hwIjpudWxsLCJqZW5pc19rZWxhbWluIjpudWxsLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOiIwIiwidmFsaWRhdG9yX2thdGVnb3JpX2lkIjoiMCIsInVzZXJfY29kZSI6IjE5NDQiLCJBUElfVElNRSI6MTcwODc4NTc0Mn0.gJzq7UfkAG0m5a_uPJGqwyB03TjjTGXdq_WiAx3JIt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "123123123",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/login",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:36:00 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ci_session=3e6ebi6nkl7ls9bp116o31nhn26io9c8; expires=Tue, 05-Mar-2024 14:36:00 GMT; Max-Age=7200; path=/; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "456"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"uid\": \"1441\",\n    \"message\": \"Login Berhasil!\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJub19ocCI6bnVsbCwiamVuaXNfa2VsYW1pbiI6bnVsbCwidmFsaWRhdG9yX2JyYW5kX2lkIjoiMCIsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiIxOTQ0IiwiQVBJX1RJTUUiOjE3MDk2NDIxNjF9.fc0sxpxENWvNSfoNc3pxI76aM-Yee6SApVRniFwmJOU\"\n}"
+				},
+				{
+					"name": "Validation Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.coms",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:45:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Email tidak terdaftar!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "data sumarry",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_api}}/users/datasummary",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"datasummary"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/datasummary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"datasummary"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:47:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "123"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"data\": [\n        {\n            \"total\": \"0\",\n            \"legit_status\": null,\n            \"check_result\": null,\n            \"kategori_id\": null,\n            \"validator_brand_id\": null\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "update password",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "12345678s",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/updatepassword",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"updatepassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/updatepassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"updatepassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:47:48 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "267"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": {\n        \"user_id\": \"1441\",\n        \"nama\": \"harumi\",\n        \"username\": \"harumi189\",\n        \"email\": \"kelasduade@gmail.com\",\n        \"role\": \"admin\",\n        \"no_hp\": null,\n        \"jenis_kelamin\": null,\n        \"validator_brand_id\": \"0\",\n        \"validator_kategori_id\": \"0\",\n        \"user_code\": \"1944\",\n        \"API_TIME\": 1709642161\n    },\n    \"data\": []\n}"
+				},
+				{
+					"name": "Error Validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "12345678s",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/updatepassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"updatepassword"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:48:10 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "122"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Password Konfirmasi harus sama!\\n\",\n    \"error_data\": {\n        \"passconf\": \"Password Konfirmasi harus sama!\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Validator",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id_user",
+							"value": "1441",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/validatordelete",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"validatordelete"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_user",
+									"value": "1440",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/validatordelete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"validatordelete"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:51:34 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "65"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"user tidak ditemukan\",\n    \"error_data\": []\n}"
+				},
+				{
+					"name": "Error Validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_user",
+									"value": "1440",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/validatordelete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"validatordelete"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:52:02 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "119"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"The Id User field is required.\\n\",\n    \"error_data\": {\n        \"id_user\": \"The Id User field is required.\"\n    }\n}"
+				},
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id_user",
+									"value": "1441",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/validatordelete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"validatordelete"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:52:45 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "54"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Berhasil dihapus\",\n    \"data\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "harumi",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "validator",
+							"description": "optional",
+							"type": "text"
+						},
+						{
+							"key": "validator_brand_id",
+							"value": "999",
+							"description": "optional",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/register",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Error Validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/register",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:57:47 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "331"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Nama tidak boleh kosong!\\nEmail tidak boleh kosong!\\nPassword tidak boleh kosong!\\nKonfirmsi Password tidak boleh kosong!\\n\",\n    \"error_data\": {\n        \"nama\": \"Nama tidak boleh kosong!\",\n        \"email\": \"Email tidak boleh kosong!\",\n        \"password\": \"Password tidak boleh kosong!\",\n        \"passconf\": \"Konfirmsi Password tidak boleh kosong!\"\n    }\n}"
+				},
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/register",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:58:17 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Register Berhasil\",\n    \"data\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Validate Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "harumi",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "123123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/validatetoken",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"validatetoken"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Unauthorize",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/validatetoken",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"validatetoken"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 13:01:22 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Unauthorized\"\n}"
+				},
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/validatetoken",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"validatetoken"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 13:02:25 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ci_session=jfs13v7s3g0vvr00sn3kjuu56ud91her; expires=Tue, 05-Mar-2024 15:02:25 GMT; Max-Age=7200; path=/; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "User List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "harumi",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123123",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "123123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/userlist?datatable[sSearch]=test&datatable[iDisplayStart]=test&datatable[iDisplayLength]=1&datatable[sEcho]=1",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"userlist"
+					],
+					"query": [
+						{
+							"key": "datatable[sSearch]",
+							"value": "test"
+						},
+						{
+							"key": "datatable[iDisplayStart]",
+							"value": "test"
+						},
+						{
+							"key": "datatable[iDisplayLength]",
+							"value": "1"
+						},
+						{
+							"key": "datatable[sEcho]",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/userlist?datatable[sSearch]=test&datatable[iDisplayStart]=test&datatable[iDisplayLength]=1&datatable[sEcho]=1",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"userlist"
+							],
+							"query": [
+								{
+									"key": "datatable[sSearch]",
+									"value": "test"
+								},
+								{
+									"key": "datatable[iDisplayStart]",
+									"value": "test"
+								},
+								{
+									"key": "datatable[iDisplayLength]",
+									"value": "1"
+								},
+								{
+									"key": "datatable[sEcho]",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 13:08:34 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "68"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"sEcho\": 1,\n    \"iTotalRecords\": 0,\n    \"iTotalDisplayRecords\": \"0\",\n    \"aaData\": []\n}"
+				}
+			]
+		}
+	]
+}

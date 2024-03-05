@@ -323,8 +323,25 @@ class Legits extends RestController {
         }
     }
 
-    public function validation_post(){
+    public function validation_post() {
         $this->authorization_token->authtoken();
+    
+        // Validate input data
+        $this->form_validation->set_rules('check_result', 'Check Result', 'required');
+        $this->form_validation->set_rules('processing_status', 'Processing Status', 'required');
+        $this->form_validation->set_rules('check_note', 'Check Note', 'required');
+        $this->form_validation->set_rules('legit_id', 'Legit ID', 'required');
+        $this->form_validation->set_rules('validator_user_id', 'Validator User ID', 'required');
+        $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
+        // Check if validation rules are not met
+        if (!$this->form_validation->run()) {
+            $this->response([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $this->form_validation->error_array()
+            ], 400);
+        }
+    
         $check_result = $this->input->post('check_result');
         $processing_mode = $this->input->post('processing_status');
         $check_note = $this->input->post('check_note');
