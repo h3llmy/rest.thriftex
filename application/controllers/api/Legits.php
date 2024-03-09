@@ -22,6 +22,7 @@ class Legits extends RestController {
         $this->load->model('Validator_model','validator');
         $this->load->model('Brand_model','brand');
         $this->load->library('Smtp');
+        $this->load->library('S3');
         date_default_timezone_set('Asia/Makassar');
     }
     function caseCode($user_id,$brand_id){
@@ -81,10 +82,11 @@ class Legits extends RestController {
                     if($this->upload->do_upload('file')){
                         
                         $uploadData = $this->upload->data();
-                        $nama_foto = $uploadData['file_name'];
+                        $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
                         $data_foto[] = array(
-                            'nama_foto' => $nama_foto
+                            'nama_foto' => $imageUrl
                         );
+                        unlink($uploadData['full_path']);
                     }else{
                         $error = array('error' => $this->upload->display_errors());
                         $response = array(
@@ -157,7 +159,7 @@ class Legits extends RestController {
                 ],400);
             }else{
                 $this->db->trans_commit();
-                $this->admin_email_notif($case_id);
+                // $this->admin_email_notif($case_id);
                 $this->response([
                     'status'    => true,
                     'case_id'   => $case_id,
