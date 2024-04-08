@@ -319,6 +319,7 @@ class Users extends RestController {
         }else{
             $this->response([
                 'status'    => false,
+                'message'   => "hanya bisa diakses oleh admin"
             ]);
         }
     }
