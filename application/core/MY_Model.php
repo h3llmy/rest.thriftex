@@ -92,13 +92,18 @@ class MY_Model extends CI_Model{
 		return $this->db->delete($this->_table_name);
 	}
 
-	public function count($where = NULL){
+	public function count($where = NULL, $where_not = NULL){
 		if(!empty($this->_type)){
 			$where['post_type'] = $this->_type;
 		}
 
 		if($where){
 			$this->db->where($where);
+		}
+		if($where_not){
+			foreach ($where_not as $key => $value) {
+				$this->db->where($key." !=", $value);
+			}
 		}
 		$this->db->from($this->_table_name);
 		return $this->db->count_all_results();

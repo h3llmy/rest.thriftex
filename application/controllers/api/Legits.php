@@ -398,7 +398,8 @@ class Legits extends RestController {
         $data = array(
             'total_user'  => $this->user->count(array('role' => 'user')),
             'total_validator'=> $this->user->count(array('role' => 'validator')),
-            'total_legit_success'  => '...',
+            'total_checked'  => $this->validator->count(NULL, array("check_result" => 'processing')),
+            'total_progress'  => $this->validator->count(array("check_result" => 'processing')),
         );
         $this->response([
             'status' => true,
