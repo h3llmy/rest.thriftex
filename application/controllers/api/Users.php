@@ -15,6 +15,7 @@ class Users extends RestController {
         $this->load->helper(array('user_helper'));
         $this->load->model('User_model','user');
         $this->load->model('Validator_model','validator');
+        $this->load->library('S3');
     }
     public function register_post()
 	{   
@@ -351,6 +352,13 @@ class Users extends RestController {
     }
 
     public function updateuserprofile_post() {
+        $config['upload_path'] = './media/';
+        $config['allowed_types'] = 'jpg|jpeg|png|webp|image/jpeg|PNG|JPEG|JPG';
+		$config['overwrite']     = FALSE;
+		$config['max_size'] = '10000';
+		$config['encrypt_name'] = TRUE;
+        $this->load->library('upload',$config);
+        $this->upload->initialize($config);
         try {
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('nama', 'Nama', 'required');
@@ -370,6 +378,28 @@ class Users extends RestController {
             if (!$this->form_validation->run()) {
                 throw new Exception(validation_errors());
             }
+
+            $data_foto = array();
+            if($this->upload->do_upload('foto')){
+                        
+                $uploadData = $this->upload->data();
+                
+                $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                $data_foto[] = array(
+                    'nama_foto' => $imageUrl
+                );
+                unlink($uploadData['full_path']);
+            }else{
+                $error = array('error' => $this->upload->display_errors());
+                $response = array(
+                    'status'	=> false,
+                    'msg'		=> 'Foto Gagal di Upload!',
+                    'eror'  => $error
+                );
+                echo json_encode($response);
+                die;
+            }
+
     
             // Update user profile
             // $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
@@ -381,6 +411,7 @@ class Users extends RestController {
                 "jenis_kelamin" => $this->input->post('jenis_kelamin'),
                 "email" => $this->input->post('email'),
                 "password" => bCrypt($this->input->post('password'),12),
+                'foto' => $data_foto[0]['nama_foto']
             ],['id' => $decodedToken['data']->user_id]);
     
             if ($user === TRUE) {
