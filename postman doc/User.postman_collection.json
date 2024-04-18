@@ -1487,6 +1487,75 @@
 					"body": "{\n    \"sEcho\": 1,\n    \"iTotalRecords\": 0,\n    \"iTotalDisplayRecords\": \"0\",\n    \"aaData\": []\n}"
 				}
 			]
+		},
+		{
+			"name": "update profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "harumi",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "mimi",
+							"type": "text"
+						},
+						{
+							"key": "no_hp",
+							"value": "98120938109283",
+							"type": "text"
+						},
+						{
+							"key": "jenis_kelamin",
+							"value": "laki-laki",
+							"type": "text"
+						},
+						{
+							"key": "old_password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/updateuserprofile",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"updateuserprofile"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
