@@ -21,6 +21,46 @@ class User_model extends MY_Model
     //     return $this->db->affected_rows();
     // }
 
+	public function list_pagination($limit, $page_number, $search = NULL) {
+		$offset = ($page_number - 1) * $limit;
+	
+		// Initialize the query builder
+		$this->db->select('id, nama, username, email, foto, role, register_tipe, validator_brand_id, validator_kategori_id, user_code, gid, no_hp, jenis_kelamin, created_at, updated_at');
+	
+		// Apply search filters if provided
+		if (!empty($search)) {
+			$this->db->group_start();
+			$this->db->like('id', $search, 'both');
+			$this->db->or_like('nama', $search, 'both');
+			$this->db->or_like('username', $search, 'both');
+			$this->db->or_like('email', $search, 'both');
+			$this->db->or_like('role', $search, 'both');
+			$this->db->or_like('register_tipe', $search, 'both');
+			$this->db->or_like('user_code', $search, 'both');
+			$this->db->group_end();
+		}
+	
+		// Count the total filtered data
+		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
+	
+		// Calculate total pages
+		$total_pages = ceil($total_data_count / $limit);
+	
+		// Set limit and offset
+		$this->db->limit($limit, $offset);
+	
+		// Fetch paginated data
+		$paginated_data = $this->db->get()->result();
+	
+		// Return an array containing paginated data, total pages, and total data count
+		return array(
+			'total_pages' => $total_pages,
+			'total_data' => $total_data_count,
+			'current_page' => $page_number,
+			'data' => $paginated_data,
+		);
+	}
+	
     public function createUser($data){
 		// Check if the email already exists
 		$existingUser = $this->db->get_where('tbl_user', array('email' => $data['email']))->row_array();
