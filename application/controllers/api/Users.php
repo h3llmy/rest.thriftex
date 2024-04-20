@@ -15,6 +15,7 @@ class Users extends RestController {
         $this->load->helper(array('user_helper'));
         $this->load->model('User_model','user');
         $this->load->model('Validator_model','validator');
+        $this->load->library('S3');
     }
     public function register_post()
 	{   
@@ -233,6 +234,8 @@ class Users extends RestController {
 			}
 		}else{
 			$this->form_validation->set_message('password_check','Password salah!');
+        var_dump($user_detail);
+
 			return FALSE;
 		}
 	}
@@ -348,11 +351,103 @@ class Users extends RestController {
         }
     }
 
+    public function updateuserprofile_post() {
+        $config['upload_path'] = './media/';
+        $config['allowed_types'] = 'jpg|jpeg|png|webp|image/jpeg|PNG|JPEG|JPG';
+		$config['overwrite']     = FALSE;
+		$config['max_size'] = '10000';
+		$config['encrypt_name'] = TRUE;
+        $this->load->library('upload',$config);
+        $this->upload->initialize($config);
+        try {
+            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('nama', 'Nama', 'required');
+            $this->form_validation->set_rules('no_hp', 'Phone Number', 'required');
+            $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
+            $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email', array('matches' => 'Password Konfirmasi harus sama!'));
+            $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
+            $this->authorization_token->authtoken();
+            $headers = $this->input->request_headers();
+            $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+            
+            $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
+            // Run form validation
+            if (!$this->form_validation->run()) {
+                throw new Exception(validation_errors());
+            }
+
+            $data_foto = array();
+            if($this->upload->do_upload('foto')){
+                        
+                $uploadData = $this->upload->data();
+                
+                $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                $data_foto[] = array(
+                    'nama_foto' => $imageUrl
+                );
+                unlink($uploadData['full_path']);
+            }else{
+                $error = array('error' => $this->upload->display_errors());
+                $response = array(
+                    'status'	=> false,
+                    'msg'		=> 'Foto Gagal di Upload!',
+                    'eror'  => $error
+                );
+                echo json_encode($response);
+                die;
+            }
+
+    
+            // Update user profile
+            // $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
+
+            $user = $this->user->update([
+                "username" => $this->input->post('username'),
+                "nama" => $this->input->post('nama'),
+                "no_hp" => $this->input->post('no_hp'),
+                "jenis_kelamin" => $this->input->post('jenis_kelamin'),
+                "email" => $this->input->post('email'),
+                "password" => bCrypt($this->input->post('password'),12),
+                'foto' => $data_foto[0]['nama_foto']
+            ],['id' => $decodedToken['data']->user_id]);
+    
+            if ($user === TRUE) {
+                // Return response
+                $this->response([
+                    "message" => "user updated"
+                ]);
+            } else {
+                $this->response([
+                    "message"=> 'fail to update user'
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            // Handle exceptions
+            $this->response([
+                'status' => false,
+                'message'   => $th->getMessage(),
+                'error_data' => [
+                    'nama' => form_error('nama'),
+                    'username' => form_error('username'),
+                    'no_hp' => form_error('no_hp'),
+                    'jenis_kelamin' => form_error('jenis_kelamin'),
+                    'old_password' => form_error('old_password'),
+                    'password' => form_error('password'),
+                    'passconf' => form_error('passconf'),
+                    'email' => form_error('email'),
+                ]
+            ], 400);
+        }
+    }
+    
+
     public function checkusername_post(){
         $this->authorization_token->authtoken();
         $headers = $this->input->request_headers();
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-        // var_dump();
         $data = $this->input->post();
         $cek_username = $this->user->get_by(array('username' => $data['username']),null,null,true,array('username'));
         if(!empty($cek_username)){
