@@ -52,11 +52,33 @@ class Authorization_Token
          * Load Config Items Values 
          */
         $this->token_key        = $this->CI->config->item('jwt_key');
+        $this->token_key_refresh= $this->CI->config->item('jwt_key_refresh');
         $this->token_algorithm  = $this->CI->config->item('jwt_algorithm');
         $this->token_header  = $this->CI->config->item('token_header');
         $this->token_expire_time  = $this->CI->config->item('token_expire_time');
     }
 
+    /**
+     * Generate Token
+     * @param: {array} data
+     */
+    public function generateTokenRefresh($data = null)
+    {
+        if ($data AND is_array($data))
+        {
+            // add api time key in user array()
+            $data['API_TIME'] = time() * 2;
+
+            try {
+                return JWT::encode($data, $this->token_key_refresh, $this->token_algorithm);
+            }
+            catch(Exception $e) {
+                return 'Message: ' .$e->getMessage();
+            }
+        } else {
+            return "Token Data Undefined!";
+        }
+    }
     /**
      * Generate Token
      * @param: {array} data
@@ -147,6 +169,60 @@ class Authorization_Token
             // Authorization Header Not Found!
             return ['status' => FALSE, 'message' => $token_data['message'] ];
         }
+    }
+
+    /**
+     * Validate Token with Header
+     * @return : user informations
+     */
+    public function validateTokenRefresh($token_data)
+    {
+
+            try
+            {
+                /**
+                 * Token Decode
+                 */
+                try {
+                    $token_decode = JWT::decode($token_data, $this->token_key_refresh, array($this->token_algorithm));
+                }
+                catch(Exception $e) {
+                    return ['status' => FALSE, 'message' => $e->getMessage()];
+                }
+
+                if(!empty($token_decode) AND is_object($token_decode))
+                {
+                    // Check Token API Time [API_TIME]
+                    if (empty($token_decode->API_TIME OR !is_numeric($token_decode->API_TIME))) {
+                        
+                        return ['status' => FALSE, 'message' => 'Token Time Not Define!'];
+                    }
+                    else
+                    {
+                        /**
+                         * Check Token Time Valid 
+                         */
+                        $time_difference = strtotime('now') - $token_decode->API_TIME;
+                        if( $time_difference >= $this->token_expire_time )
+                        {
+                            return ['status' => FALSE, 'message' => 'Token Time Expire.'];
+
+                        }else
+                        {
+                            /**
+                             * All Validation False Return Data
+                             */
+                            return ['status' => TRUE, 'data' => $token_decode];
+                        }
+                    }
+                    
+                }else{
+                    return ['status' => FALSE, 'message' => 'Forbidden'];
+                }
+            }
+            catch(Exception $e) {
+                return ['status' => FALSE, 'message' => $e->getMessage()];
+            }
     }
 
     /**
