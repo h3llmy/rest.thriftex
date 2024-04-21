@@ -201,17 +201,22 @@ class Legits extends RestController {
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
         $user_id = $decodedToken['data']->user_id;
-        $dataLegit = $this->legit->getLegitListUser($user_id);
-        // var_dump($dataLegit);
-        foreach ($dataLegit as $key) {
-            // if($key->check_result == 'preview'){
-            //     $key->check_result = 'Checking';
-            // }else
-            if($key->check_result == 'real'){
-                $key->check_result = 'Original';
-            }
-            if($key->check_result == null){
-                $key->check_result = 'Waiting';
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+
+        $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page);
+        if (!empty($dataLegit->data)) {
+            foreach ($dataLegit as $key) {
+                // if($key->check_result == 'preview'){
+                //     $key->check_result = 'Checking';
+                // }else
+                if($key->data->check_result == 'real'){
+                    $key->data->check_result = 'Original';
+                }
+                if($key->data->check_result == null){
+                    $key->data->check_result = 'Waiting';
+                }
             }
         }
         $this->response([
