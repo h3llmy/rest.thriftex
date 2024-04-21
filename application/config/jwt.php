@@ -8,6 +8,8 @@
 //$config['jwt_key'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJss9';
 $config['jwt_key'] = 'eyJ0eXAiOiJKV1QiLCJhbGciTWvLUzI1NiJ9IiRkYXRhIg'; //old
 
+$config['jwt_key_refresh'] = 'eyJ0eXAiasdiJKQiLCJhbGciTWvLUzI1NiJ9IiRkYXRhIl'; //old
+
 
 /*
 |-----------------------

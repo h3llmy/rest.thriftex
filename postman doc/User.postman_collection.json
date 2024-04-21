@@ -238,6 +238,225 @@
 			]
 		},
 		{
+			"name": "refresh token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsIm5vX2hwIjpudWxsLCJqZW5pc19rZWxhbWluIjpudWxsLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOiIwIiwidmFsaWRhdG9yX2thdGVnb3JpX2lkIjoiMCIsInVzZXJfY29kZSI6IjE5NDQiLCJBUElfVElNRSI6MTcwODc4NTc0Mn0.gJzq7UfkAG0m5a_uPJGqwyB03TjjTGXdq_WiAx3JIt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "refresh_token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0NyIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6Im1pbWkiLCJlbWFpbCI6ImtlbGFzZHVhZGVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibm9faHAiOiI5ODEyMDkzODEwOTI4MyIsImplbmlzX2tlbGFtaW4iOiJsYWtpLWxha2kiLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOm51bGwsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiI2MTQ4IiwiQVBJX1RJTUUiOjM0MjczMzIyNDZ9.VJb1iSTb4d0FzJsTrdiPnVNDCha445R5so2sFVvvVuI",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/refresh_token",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"refresh_token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:36:00 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ci_session=3e6ebi6nkl7ls9bp116o31nhn26io9c8; expires=Tue, 05-Mar-2024 14:36:00 GMT; Max-Age=7200; path=/; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "456"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"uid\": \"1441\",\n    \"message\": \"Login Berhasil!\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJub19ocCI6bnVsbCwiamVuaXNfa2VsYW1pbiI6bnVsbCwidmFsaWRhdG9yX2JyYW5kX2lkIjoiMCIsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiIxOTQ0IiwiQVBJX1RJTUUiOjE3MDk2NDIxNjF9.fc0sxpxENWvNSfoNc3pxI76aM-Yee6SApVRniFwmJOU\"\n}"
+				},
+				{
+					"name": "Validation Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.coms",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:45:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Email tidak terdaftar!\"\n}"
+				}
+			]
+		},
+		{
 			"name": "data sumarry",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
