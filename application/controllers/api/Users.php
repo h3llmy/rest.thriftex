@@ -247,12 +247,16 @@ class Users extends RestController {
                 'validator_kategori_id'    => $this->user_detail->validator_kategori_id,
                 'user_code' => $this->user_detail->user_code
             );
+
             $token = $this->authorization_token->generateToken($token_data);
+            $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+
             $this->response([
                 'status' => true,
                 'uid'   => $this->user_detail->id,
                 'message'   => 'Login Berhasil!',
-                'token'  => $token
+                'access_token'  => $token,
+                'refresh_token' => $token_refresh
             ],200);
             
         } catch (\Throwable $th) {
@@ -261,6 +265,33 @@ class Users extends RestController {
                 'message'   => $th->getMessage(),
             ],400);
         }
+    }
+
+    public function refresh_token_post() {
+        $refresh_token = $this->input->post('refresh_token');
+
+        $decodedToken = $this->authorization_token->validateTokenRefresh($refresh_token);
+
+        $token_data = array(
+            'user_id'   => $decodedToken['data']->user_id,
+            'nama'  => $decodedToken['data']->nama,
+            'username' => $decodedToken['data']->username,
+            'email'  => $decodedToken['data']->email,
+            'role'  => $decodedToken['data']->role,
+            'no_hp'  => $decodedToken['data']->no_hp,
+            'jenis_kelamin'  => $decodedToken['data']->jenis_kelamin,
+            'validator_brand_id'    => $decodedToken['data']->validator_brand_id,
+            'validator_kategori_id'    => $decodedToken['data']->validator_kategori_id,
+            'user_code' => $decodedToken['data']->user_code
+        );
+
+        $token = $this->authorization_token->generateToken($token_data);
+        $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+
+        return $this->response([
+            'access_token'  => $token,
+            'refresh_token' => $token_refresh
+        ], 200);
     }
 
     public function password_check($str){
@@ -453,11 +484,31 @@ class Users extends RestController {
                 "password" => bCrypt($this->input->post('password'),12),
                 'foto' => $data_foto[0]['nama_foto']
             ],['id' => $decodedToken['data']->user_id]);
+
+            $user_detail = $this->user->get($decodedToken['data']->user_id, TRUE);
+
+            $token_data = array(
+                'user_id'   => $user_detail->id,
+                'nama'  => $user_detail->nama,
+                'username' => $user_detail->username,
+                'email'  => $user_detail->email,
+                'role'  => $user_detail->role,
+                'no_hp'  => $user_detail->no_hp,
+                'jenis_kelamin'  => $user_detail->jenis_kelamin,
+                'validator_brand_id'    => $user_detail->validator_brand_id,
+                'validator_kategori_id'    => $user_detail->validator_kategori_id,
+                'user_code' => $user_detail->user_code
+            );
+
+            $token = $this->authorization_token->generateToken($token_data);
+            $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
     
             if ($user === TRUE) {
                 // Return response
                 $this->response([
-                    "message" => "user updated"
+                    "message" => "user updated",
+                    "access_token" => $token,
+                    "refresh_token" => $token_refresh,
                 ]);
             } else {
                 $this->response([
