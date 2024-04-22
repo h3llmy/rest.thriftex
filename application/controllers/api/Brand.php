@@ -51,8 +51,6 @@ class Brand extends RestController{
         $this->upload->initialize($config);
         try {
             $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
-            $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
-            $this->form_validation->set_rules('kategori_id', 'Kategori', 'required');
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
     
             // Run form validation
@@ -83,8 +81,6 @@ class Brand extends RestController{
 
             $this->brand->insert([
                 'brand_name' => $this->input->post('brand_name'),
-                'deskripsi' => $this->input->post('deskripsi'),
-                'kategori_id' => $this->input->post('kategori_id'),
                 'foto' => $data_foto[0]['nama_foto'],
             ]);
 
@@ -125,8 +121,6 @@ class Brand extends RestController{
         $this->upload->initialize($config);
         try {
             $this->form_validation->set_rules('brand_name', 'Brand Name', 'required');
-            $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required');
-            $this->form_validation->set_rules('kategori_id', 'Kategori', 'required');
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
     
             // Run form validation
@@ -158,8 +152,6 @@ class Brand extends RestController{
             // Update the brand with the provided ID
             $this->brand->update([
                 'brand_name' => $this->input->post('brand_name'),
-                'deskripsi' => $this->input->post('deskripsi'),
-                'kategori_id' => $this->input->post('kategori_id'),
                 'foto' => $data_foto[0]['nama_foto'],
             ], ['id' => $this->input->post('id')]);
     
