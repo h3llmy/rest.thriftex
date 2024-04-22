@@ -18,26 +18,7 @@ class Users extends RestController {
         $this->load->model('Validator_model','validator');
         $this->load->library('S3');
     }
-
-    public function brands_get() {
-        $this->authorization_token->authtoken();
-        $headers = $this->input->request_headers();
-        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
-            return $this->response([
-                'message' => 'Forbidden'
-            ], 403);
-        }
-
-        $limit = (int)($this->input->get('limit') ?? 10);
-        $page = (int)($this->input->get('page') ?? 1);
-        
-        $users = $this->brand->list_pagination($limit, $page,$this->input->get('search'));
-        return $this->response([
-            'data' => $users
-        ],200);
-    }
-
+    
     public function list_get() {
         $this->authorization_token->authtoken();
         $headers = $this->input->request_headers();
@@ -52,6 +33,25 @@ class Users extends RestController {
         $page = (int)($this->input->get('page') ?? 1);
         
         $users = $this->user->list_pagination($limit, $page,$this->input->get('search'));
+        return $this->response([
+            'data' => $users
+        ],200);
+    }
+    
+    public function validators_get() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        
+        $users = $this->validator->list_pagination($limit, $page,$this->input->get('search'));
         return $this->response([
             'data' => $users
         ],200);
