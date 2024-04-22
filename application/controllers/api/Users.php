@@ -421,14 +421,14 @@ class Users extends RestController {
             ]);
         }
     }
-
+    
     public function updateuserprofile_post() {
         $config['upload_path'] = './media/';
         $config['allowed_types'] = 'jpg|jpeg|png|webp|image/jpeg|PNG|JPEG|JPG';
-		$config['overwrite']     = FALSE;
-		$config['max_size'] = '10000';
-		$config['encrypt_name'] = TRUE;
-        $this->load->library('upload',$config);
+        $config['overwrite']     = FALSE;
+        $config['max_size'] = '10000';
+        $config['encrypt_name'] = TRUE;
+        $this->load->library('upload', $config);
         $this->upload->initialize($config);
         try {
             $this->form_validation->set_rules('username', 'Username', 'required');
@@ -449,44 +449,43 @@ class Users extends RestController {
             if (!$this->form_validation->run()) {
                 throw new Exception(validation_errors());
             }
-
+    
             $data_foto = array();
-            if($this->upload->do_upload('foto')){
-                        
-                $uploadData = $this->upload->data();
-                
-                $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
-                $data_foto[] = array(
-                    'nama_foto' => $imageUrl
-                );
-                unlink($uploadData['full_path']);
-            }else{
-                $error = array('error' => $this->upload->display_errors());
-                $response = array(
-                    'status'	=> false,
-                    'msg'		=> 'Foto Gagal di Upload!',
-                    'eror'  => $error
-                );
-                echo json_encode($response);
-                die;
+            // Check if a file is uploaded
+            if (!empty($_FILES['foto']['name'])) {
+                if ($this->upload->do_upload('foto')) {
+                    $uploadData = $this->upload->data();
+                    $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                    $data_foto[] = array(
+                        'nama_foto' => $imageUrl
+                    );
+                    unlink($uploadData['full_path']);
+                } else {
+                    $error = array('error' => $this->upload->display_errors());
+                    $response = array(
+                        'status'    => false,
+                        'msg'       => 'Foto Gagal di Upload!',
+                        'eror'      => $error
+                    );
+                    echo json_encode($response);
+                    die;
+                }
             }
-
     
             // Update user profile
-            // $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
-
             $user = $this->user->update([
                 "username" => $this->input->post('username'),
                 "nama" => $this->input->post('nama'),
                 "no_hp" => $this->input->post('no_hp'),
                 "jenis_kelamin" => $this->input->post('jenis_kelamin'),
                 "email" => $this->input->post('email'),
-                "password" => bCrypt($this->input->post('password'),12),
-                'foto' => $data_foto[0]['nama_foto']
-            ],['id' => $decodedToken['data']->user_id]);
-
+                "password" => bCrypt($this->input->post('password'), 12),
+                // Check if photo data exists, if not use existing photo
+                'foto' => !empty($data_foto) ? $data_foto[0]['nama_foto'] : $this->user_detail->foto
+            ], ['id' => $decodedToken['data']->user_id]);
+    
             $user_detail = $this->user->get($decodedToken['data']->user_id, TRUE);
-
+    
             $token_data = array(
                 'user_id'   => $user_detail->id,
                 'nama'  => $user_detail->nama,
@@ -499,7 +498,7 @@ class Users extends RestController {
                 'validator_kategori_id'    => $user_detail->validator_kategori_id,
                 'user_code' => $user_detail->user_code
             );
-
+    
             $token = $this->authorization_token->generateToken($token_data);
             $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
     
