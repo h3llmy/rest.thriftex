@@ -421,11 +421,11 @@ class Users extends RestController {
             ]);
         }
     }
-    
+
     public function updateuserprofile_post() {
         $config['upload_path'] = './media/';
         $config['allowed_types'] = 'jpg|jpeg|png|webp|image/jpeg|PNG|JPEG|JPG';
-        $config['overwrite']     = FALSE;
+        $config['overwrite'] = FALSE;
         $config['max_size'] = '10000';
         $config['encrypt_name'] = TRUE;
         $this->load->library('upload', $config);
@@ -435,16 +435,22 @@ class Users extends RestController {
             $this->form_validation->set_rules('nama', 'Nama', 'required');
             $this->form_validation->set_rules('no_hp', 'Phone Number', 'required');
             $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
-            $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
-            $this->form_validation->set_rules('password', 'Password', 'required');
-            $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]');
+            
+            if (!empty($this->input->post('old_password'))) {
+                $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
+                $this->form_validation->set_rules('password', 'Password', 'required');
+                $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]');
+            }
+    
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email', array('matches' => 'Password Konfirmasi harus sama!'));
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
+            
             $this->authorization_token->authtoken();
             $headers = $this->input->request_headers();
             $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
             
             $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
+            
             // Run form validation
             if (!$this->form_validation->run()) {
                 throw new Exception(validation_errors());
@@ -463,39 +469,43 @@ class Users extends RestController {
                 } else {
                     $error = array('error' => $this->upload->display_errors());
                     $response = array(
-                        'status'    => false,
-                        'msg'       => 'Foto Gagal di Upload!',
-                        'eror'      => $error
+                        'status' => false,
+                        'msg' => 'Foto Gagal di Upload!',
+                        'error' => $error
                     );
                     echo json_encode($response);
                     die;
                 }
             }
-    
-            // Update user profile
-            $user = $this->user->update([
+
+            $user_updated_data = [
                 "username" => $this->input->post('username'),
                 "nama" => $this->input->post('nama'),
                 "no_hp" => $this->input->post('no_hp'),
                 "jenis_kelamin" => $this->input->post('jenis_kelamin'),
-                "email" => $this->input->post('email'),
-                "password" => bCrypt($this->input->post('password'), 12),
-                // Check if photo data exists, if not use existing photo
+                "email" => $this->input->post('email'),  
                 'foto' => !empty($data_foto) ? $data_foto[0]['nama_foto'] : $this->user_detail->foto
-            ], ['id' => $decodedToken['data']->user_id]);
+            ];
+
+            if (!empty($this->input->post('password'))) {
+                $user_updated_data['password'] = bCrypt($this->input->post('password'), 12);
+            }
+    
+            // Update user profile
+            $user = $this->user->update($user_updated_data, ['id' => $decodedToken['data']->user_id]);
     
             $user_detail = $this->user->get($decodedToken['data']->user_id, TRUE);
     
             $token_data = array(
-                'user_id'   => $user_detail->id,
-                'nama'  => $user_detail->nama,
+                'user_id' => $user_detail->id,
+                'nama' => $user_detail->nama,
                 'username' => $user_detail->username,
-                'email'  => $user_detail->email,
-                'role'  => $user_detail->role,
-                'no_hp'  => $user_detail->no_hp,
-                'jenis_kelamin'  => $user_detail->jenis_kelamin,
-                'validator_brand_id'    => $user_detail->validator_brand_id,
-                'validator_kategori_id'    => $user_detail->validator_kategori_id,
+                'email' => $user_detail->email,
+                'role' => $user_detail->role,
+                'no_hp' => $user_detail->no_hp,
+                'jenis_kelamin' => $user_detail->jenis_kelamin,
+                'validator_brand_id' => $user_detail->validator_brand_id,
+                'validator_kategori_id' => $user_detail->validator_kategori_id,
                 'user_code' => $user_detail->user_code
             );
     
@@ -511,14 +521,14 @@ class Users extends RestController {
                 ]);
             } else {
                 $this->response([
-                    "message"=> 'fail to update user'
+                    "message" => 'fail to update user'
                 ], 400);
             }
         } catch (\Throwable $th) {
             // Handle exceptions
             $this->response([
                 'status' => false,
-                'message'   => $th->getMessage(),
+                'message' => $th->getMessage(),
                 'error_data' => [
                     'nama' => form_error('nama'),
                     'username' => form_error('username'),
