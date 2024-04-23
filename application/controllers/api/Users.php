@@ -129,6 +129,7 @@ class Users extends RestController {
                     'username' => $cek_email->username,
                     'email'  => $cek_email->email,
                     'role'  => $cek_email->role,
+                    'foto'  => $cek_email->foto,
                     'validator_brand_id'    => $cek_email->validator_brand_id,
                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
                     'user_code' => $cek_email->user_code,
@@ -211,7 +212,7 @@ class Users extends RestController {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         if(isset($email)){
-            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin'));
+            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto'));
             if($cek_email != null){
                 $this->user_detail = $cek_email;
             }else{
@@ -241,6 +242,7 @@ class Users extends RestController {
                 'username' => $this->user_detail->username,
                 'email'  => $this->user_detail->email,
                 'role'  => $this->user_detail->role,
+                'foto'  => $this->user_detail->foto,
                 'no_hp'  => $this->user_detail->no_hp,
                 'jenis_kelamin'  => $this->user_detail->jenis_kelamin,
                 'validator_brand_id'    => $this->user_detail->validator_brand_id,
@@ -278,6 +280,7 @@ class Users extends RestController {
             'username' => $decodedToken['data']->username,
             'email'  => $decodedToken['data']->email,
             'role'  => $decodedToken['data']->role,
+            'foto'  => $decodedToken['data']->foto,
             'no_hp'  => $decodedToken['data']->no_hp,
             'jenis_kelamin'  => $decodedToken['data']->jenis_kelamin,
             'validator_brand_id'    => $decodedToken['data']->validator_brand_id,
@@ -503,6 +506,7 @@ class Users extends RestController {
                 'email' => $user_detail->email,
                 'role' => $user_detail->role,
                 'no_hp' => $user_detail->no_hp,
+                'foto' => $user_detail->foto,
                 'jenis_kelamin' => $user_detail->jenis_kelamin,
                 'validator_brand_id' => $user_detail->validator_brand_id,
                 'validator_kategori_id' => $user_detail->validator_kategori_id,
