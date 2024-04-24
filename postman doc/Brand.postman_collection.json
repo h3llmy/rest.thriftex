@@ -1,0 +1,742 @@
+{
+	"info": {
+		"_postman_id": "0f8e323e-e46d-4aab-a8e7-dde49084866a",
+		"name": "Brand",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23469470",
+		"_collection_link": "https://red-space-400771.postman.co/workspace/thriftex~c79ecd4c-06f8-4602-9b4f-edfd79e4f3d0/collection/23469470-0f8e323e-e46d-4aab-a8e7-dde49084866a?action=share&source=collection_link&creator=23469470"
+	},
+	"item": [
+		{
+			"name": "list brand",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_api}}/brand/list?page=1&limit=10",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"brand",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "search",
+							"value": "Converse",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_api}}/users/brands?page=1&search=Converse",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"brands"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Converse"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 20 Apr 2024 13:48:02 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "217"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"total_pages\": 1,\n        \"total_data\": 1,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"2\",\n                \"kategori_id\": \"2\",\n                \"brand_name\": \"Converse\",\n                \"foto\": \"-\",\n                \"deskripsi\": \"-\",\n                \"created_at\": \"2023-04-04 08:41:09\",\n                \"updated_at\": \"2023-04-04 08:41:09\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_api}}/brand/detail?id=4",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"brand",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_api}}/brand/detail?id=17",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"brand",
+								"detail"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "17"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 22 Apr 2024 12:10:08 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "243"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"id\": \"17\",\n        \"kategori_id\": null,\n        \"brand_name\": \"test brand\",\n        \"foto\": \"https://thrifex.s3-id-jkt-1.kilatstorage.id/7ef100253ee17b4f18c55f6b227905c7.jpg\",\n        \"deskripsi\": \"\",\n        \"created_at\": \"0000-00-00 00:00:00\",\n        \"updated_at\": \"0000-00-00 00:00:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "brand_name",
+							"value": "test brand",
+							"type": "text"
+						},
+						{
+							"key": "deskripsi",
+							"value": "something",
+							"type": "text"
+						},
+						{
+							"key": "kategori_id",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/brand/create",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"brand",
+						"create"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand_name",
+									"value": "something",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/brand/create",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"brand",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 22 Apr 2024 12:09:11 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "35"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"brand berhasil dibuat\"\n}"
+				}
+			]
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "brand_name",
+							"value": "test brands",
+							"type": "text"
+						},
+						{
+							"key": "deskripsi",
+							"value": "something",
+							"type": "text"
+						},
+						{
+							"key": "kategori_id",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/brand/update?id=15",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"brand",
+						"update"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand_name",
+									"value": "test brands",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/brand/update?id=17",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"brand",
+								"update"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "17"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 22 Apr 2024 12:09:55 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Brand berhasil diupdate\"\n}"
+				}
+			]
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "brand_name",
+							"value": "test brand",
+							"type": "text"
+						},
+						{
+							"key": "deskripsi",
+							"value": "something",
+							"type": "text"
+						},
+						{
+							"key": "kategori_id",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/brand/delete?id=15",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"brand",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand_name",
+									"value": "test brand",
+									"type": "text"
+								},
+								{
+									"key": "deskripsi",
+									"value": "something",
+									"type": "text"
+								},
+								{
+									"key": "kategori_id",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/brand/delete?id=15",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"brand",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 22 Apr 2024 12:10:55 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "35"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"data berhasil dihapus\"\n}"
+				}
+			]
+		}
+	]
+}

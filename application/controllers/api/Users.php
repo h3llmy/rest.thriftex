@@ -18,26 +18,7 @@ class Users extends RestController {
         $this->load->model('Validator_model','validator');
         $this->load->library('S3');
     }
-
-    public function brands_get() {
-        $this->authorization_token->authtoken();
-        $headers = $this->input->request_headers();
-        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
-            return $this->response([
-                'message' => 'Forbidden'
-            ], 403);
-        }
-
-        $limit = (int)($this->input->get('limit') ?? 10);
-        $page = (int)($this->input->get('page') ?? 1);
-        
-        $users = $this->brand->list_pagination($limit, $page,$this->input->get('search'));
-        return $this->response([
-            'data' => $users
-        ],200);
-    }
-
+    
     public function list_get() {
         $this->authorization_token->authtoken();
         $headers = $this->input->request_headers();
@@ -52,6 +33,25 @@ class Users extends RestController {
         $page = (int)($this->input->get('page') ?? 1);
         
         $users = $this->user->list_pagination($limit, $page,$this->input->get('search'));
+        return $this->response([
+            'data' => $users
+        ],200);
+    }
+    
+    public function validators_get() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        
+        $users = $this->validator->list_pagination($limit, $page,$this->input->get('search'));
         return $this->response([
             'data' => $users
         ],200);
@@ -129,6 +129,7 @@ class Users extends RestController {
                     'username' => $cek_email->username,
                     'email'  => $cek_email->email,
                     'role'  => $cek_email->role,
+                    'foto'  => $cek_email->foto,
                     'validator_brand_id'    => $cek_email->validator_brand_id,
                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
                     'user_code' => $cek_email->user_code,
@@ -211,7 +212,7 @@ class Users extends RestController {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         if(isset($email)){
-            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin'));
+            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto'));
             if($cek_email != null){
                 $this->user_detail = $cek_email;
             }else{
@@ -241,6 +242,7 @@ class Users extends RestController {
                 'username' => $this->user_detail->username,
                 'email'  => $this->user_detail->email,
                 'role'  => $this->user_detail->role,
+                'foto'  => $this->user_detail->foto,
                 'no_hp'  => $this->user_detail->no_hp,
                 'jenis_kelamin'  => $this->user_detail->jenis_kelamin,
                 'validator_brand_id'    => $this->user_detail->validator_brand_id,
@@ -278,6 +280,7 @@ class Users extends RestController {
             'username' => $decodedToken['data']->username,
             'email'  => $decodedToken['data']->email,
             'role'  => $decodedToken['data']->role,
+            'foto'  => $decodedToken['data']->foto,
             'no_hp'  => $decodedToken['data']->no_hp,
             'jenis_kelamin'  => $decodedToken['data']->jenis_kelamin,
             'validator_brand_id'    => $decodedToken['data']->validator_brand_id,
@@ -425,81 +428,91 @@ class Users extends RestController {
     public function updateuserprofile_post() {
         $config['upload_path'] = './media/';
         $config['allowed_types'] = 'jpg|jpeg|png|webp|image/jpeg|PNG|JPEG|JPG';
-		$config['overwrite']     = FALSE;
-		$config['max_size'] = '10000';
-		$config['encrypt_name'] = TRUE;
-        $this->load->library('upload',$config);
+        $config['overwrite'] = FALSE;
+        $config['max_size'] = '10000';
+        $config['encrypt_name'] = TRUE;
+        $this->load->library('upload', $config);
         $this->upload->initialize($config);
         try {
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('nama', 'Nama', 'required');
             $this->form_validation->set_rules('no_hp', 'Phone Number', 'required');
             $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
-            $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
-            $this->form_validation->set_rules('password', 'Password', 'required');
-            $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]');
+            
+            if (!empty($this->input->post('old_password'))) {
+                $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
+                $this->form_validation->set_rules('password', 'Password', 'required');
+                $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]');
+            }
+    
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email', array('matches' => 'Password Konfirmasi harus sama!'));
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
+            
             $this->authorization_token->authtoken();
             $headers = $this->input->request_headers();
             $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
             
             $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
+            
             // Run form validation
             if (!$this->form_validation->run()) {
                 throw new Exception(validation_errors());
             }
-
+    
             $data_foto = array();
-            if($this->upload->do_upload('foto')){
-                        
-                $uploadData = $this->upload->data();
-                
-                $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
-                $data_foto[] = array(
-                    'nama_foto' => $imageUrl
-                );
-                unlink($uploadData['full_path']);
-            }else{
-                $error = array('error' => $this->upload->display_errors());
-                $response = array(
-                    'status'	=> false,
-                    'msg'		=> 'Foto Gagal di Upload!',
-                    'eror'  => $error
-                );
-                echo json_encode($response);
-                die;
+            // Check if a file is uploaded
+            if (!empty($_FILES['foto']['name'])) {
+                if ($this->upload->do_upload('foto')) {
+                    $uploadData = $this->upload->data();
+                    $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                    $data_foto[] = array(
+                        'nama_foto' => $imageUrl
+                    );
+                    unlink($uploadData['full_path']);
+                } else {
+                    $error = array('error' => $this->upload->display_errors());
+                    $response = array(
+                        'status' => false,
+                        'msg' => 'Foto Gagal di Upload!',
+                        'error' => $error
+                    );
+                    echo json_encode($response);
+                    die;
+                }
             }
 
-    
-            // Update user profile
-            // $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
-
-            $user = $this->user->update([
+            $user_updated_data = [
                 "username" => $this->input->post('username'),
                 "nama" => $this->input->post('nama'),
                 "no_hp" => $this->input->post('no_hp'),
                 "jenis_kelamin" => $this->input->post('jenis_kelamin'),
-                "email" => $this->input->post('email'),
-                "password" => bCrypt($this->input->post('password'),12),
-                'foto' => $data_foto[0]['nama_foto']
-            ],['id' => $decodedToken['data']->user_id]);
+                "email" => $this->input->post('email'),  
+                'foto' => !empty($data_foto) ? $data_foto[0]['nama_foto'] : $this->user_detail->foto
+            ];
 
+            if (!empty($this->input->post('password'))) {
+                $user_updated_data['password'] = bCrypt($this->input->post('password'), 12);
+            }
+    
+            // Update user profile
+            $user = $this->user->update($user_updated_data, ['id' => $decodedToken['data']->user_id]);
+    
             $user_detail = $this->user->get($decodedToken['data']->user_id, TRUE);
-
+    
             $token_data = array(
-                'user_id'   => $user_detail->id,
-                'nama'  => $user_detail->nama,
+                'user_id' => $user_detail->id,
+                'nama' => $user_detail->nama,
                 'username' => $user_detail->username,
-                'email'  => $user_detail->email,
-                'role'  => $user_detail->role,
-                'no_hp'  => $user_detail->no_hp,
-                'jenis_kelamin'  => $user_detail->jenis_kelamin,
-                'validator_brand_id'    => $user_detail->validator_brand_id,
-                'validator_kategori_id'    => $user_detail->validator_kategori_id,
+                'email' => $user_detail->email,
+                'role' => $user_detail->role,
+                'no_hp' => $user_detail->no_hp,
+                'foto' => $user_detail->foto,
+                'jenis_kelamin' => $user_detail->jenis_kelamin,
+                'validator_brand_id' => $user_detail->validator_brand_id,
+                'validator_kategori_id' => $user_detail->validator_kategori_id,
                 'user_code' => $user_detail->user_code
             );
-
+    
             $token = $this->authorization_token->generateToken($token_data);
             $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
     
@@ -512,14 +525,14 @@ class Users extends RestController {
                 ]);
             } else {
                 $this->response([
-                    "message"=> 'fail to update user'
+                    "message" => 'fail to update user'
                 ], 400);
             }
         } catch (\Throwable $th) {
             // Handle exceptions
             $this->response([
                 'status' => false,
-                'message'   => $th->getMessage(),
+                'message' => $th->getMessage(),
                 'error_data' => [
                     'nama' => form_error('nama'),
                     'username' => form_error('username'),

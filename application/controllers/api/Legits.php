@@ -58,47 +58,59 @@ class Legits extends RestController {
             $kondisi_barang = $this->input->post('kondisi_barang');
             $catatan = $this->input->post('catatan');
             $user_id = $this->input->post('user_id');
+            $purchase = $this->input->post('purchase');
             $this->form_validation->set_rules('kategori', 'Kategori', 'required');
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             $this->form_validation->set_rules('nama_item', 'Nama Item', 'required');
             $this->form_validation->set_rules('nama_toko', 'Nama Toko', 'required');
             $this->form_validation->set_rules('kondisi_barang', 'Kondisi Barang', 'required');
+            $this->form_validation->set_rules('purchase', 'Purchase', 'required');
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
             $this->form_validation->set_error_delimiters('', '');
             if(!$this->form_validation->run()) throw new Exception(validation_errors());
             
 
             $data_foto = array();
-            for($i = 0; $i < count(array_filter($_FILES['legitimage']['name']));$i++)
-            {
-                if(!empty($_FILES['legitimage']['name'][$i])){
-    
-                    $_FILES['file']['name'] = $_FILES['legitimage']['name'][$i];
-                    $_FILES['file']['type'] = $_FILES['legitimage']['type'][$i];
-                    $_FILES['file']['tmp_name'] = $_FILES['legitimage']['tmp_name'][$i];
-                    $_FILES['file']['error'] = $_FILES['legitimage']['error'][$i];
-                    $_FILES['file']['size'] = $_FILES['legitimage']['size'][$i];
-                
-                    if($this->upload->do_upload('file')){
-                        
-                        $uploadData = $this->upload->data();
-                        $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
-                        $data_foto[] = array(
-                            'nama_foto' => $imageUrl
-                        );
-                        unlink($uploadData['full_path']);
-                    }else{
-                        $error = array('error' => $this->upload->display_errors());
-                        $response = array(
-                            'status'	=> false,
-                            'msg'		=> 'Foto Gagal di Upload!',
-                            'eror'  => $error
-                        );
-                        echo json_encode($response);
-                        die;
+            $total_uploaded_images = count(array_filter($_FILES['legitimage']['name']));
+            if ($total_uploaded_images >= 6 && $total_uploaded_images <= 12) {
+                for ($i = 0; $i < $total_uploaded_images; $i++) {
+                    if (!empty($_FILES['legitimage']['name'][$i])) {
+            
+                        $_FILES['file']['name'] = $_FILES['legitimage']['name'][$i];
+                        $_FILES['file']['type'] = $_FILES['legitimage']['type'][$i];
+                        $_FILES['file']['tmp_name'] = $_FILES['legitimage']['tmp_name'][$i];
+                        $_FILES['file']['error'] = $_FILES['legitimage']['error'][$i];
+                        $_FILES['file']['size'] = $_FILES['legitimage']['size'][$i];
+            
+                        if ($this->upload->do_upload('file')) {
+            
+                            $uploadData = $this->upload->data();
+                            $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                            $data_foto[] = array(
+                                'nama_foto' => $imageUrl
+                            );
+                            unlink($uploadData['full_path']);
+                        } else {
+                            $error = array('error' => $this->upload->display_errors());
+                            $response = array(
+                                'status' => false,
+                                'msg' => 'Foto Gagal di Upload!',
+                                'eror'  => $error
+                            );
+                            echo json_encode($response);
+                            die;
+                        }
                     }
                 }
+            } else {
+                $response = array(
+                    'status' => false,
+                    'msg' => 'You can only upload between 6 to 12 images.'
+                );
+                echo json_encode($response);
+                die;
             }
+            
             // $data = array(
             //     'user_id'   => $user_id,
             //     'kategori'      => $kategori_id,
@@ -132,6 +144,7 @@ class Legits extends RestController {
                 'kondisi'       => $kondisi_barang,
                 'toko_pembelian' => $nama_toko,
                 'catatan'       => $catatan,
+                'purchase'       => $purchase,
                 'created_at'    => date('Y-m-d H:i:s')
             );
             $this->legit_detail->insert($data_legit_detail);

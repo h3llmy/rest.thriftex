@@ -59,10 +59,7 @@
 						{
 							"key": "legitimage[]",
 							"type": "file",
-							"src": [
-								"/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
-								"/C:/Users/helmy/OneDrive/Pictures/348439494_1539400996587506_2688884258340664716_n.jpg"
-							]
+							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
 						}
 					]
 				},
