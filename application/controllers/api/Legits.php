@@ -172,7 +172,7 @@ class Legits extends RestController {
                 ],400);
             }else{
                 $this->db->trans_commit();
-                // $this->admin_email_notif($case_id);
+                $this->admin_email_notif($case_id);
                 $this->response([
                     'status'    => true,
                     'case_id'   => $case_id,

@@ -31,6 +31,7 @@ class ComposerStaticInit4a9383e5be651067b1727851a1fd2eee
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
             'PhpParser\\' => 10,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'L' => 
         array (
@@ -72,8 +73,8 @@ class ComposerStaticInit4a9383e5be651067b1727851a1fd2eee
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -82,6 +83,10 @@ class ComposerStaticInit4a9383e5be651067b1727851a1fd2eee
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'LasseRafn\\Initials\\' => 
         array (

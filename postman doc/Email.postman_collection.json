@@ -1,0 +1,19 @@
+{
+	"info": {
+		"_postman_id": "f60dce11-b52f-45e3-9620-4e06bddf88ab",
+		"name": "Email",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23469470",
+		"_collection_link": "https://red-space-400771.postman.co/workspace/thriftex~c79ecd4c-06f8-4602-9b4f-edfd79e4f3d0/collection/23469470-f60dce11-b52f-45e3-9620-4e06bddf88ab?action=share&source=collection_link&creator=23469470"
+	},
+	"item": [
+		{
+			"name": "contact us",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
