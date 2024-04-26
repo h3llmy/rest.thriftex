@@ -1,78 +1,56 @@
-<?php 
+<?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Smtp{
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-	public function SendEmail($kepada,$subjek,$pesan,$buffer=null){
-		// $_this =& get_instance();
-		// $config = [
-		// 	'protocol' => 'smtp',
-		// 	'smtp_host' => 'ssl://smtp.googlemail.com',
-		// 	'smtp_user' => 'gedesugandi@gmail.com',
-		// 	'smtp_pass' => 'idmxuxynxguigynh',
-		// 	'smtp_port' => 465,
-		// 	'mailtype' => 'html',
-		// 	'charset' => 'utf-8',
-		// 	'newline' => "\r\n"
-		// ];
-		// $_this->load->library('email', $config);
-		// $_this->email->initialize($config);
-		// $_this->email->from('gedesugandi@gmail.com', 'Tude Kebaya');
-		// $_this->email->to($kepada);
-		
-		$_this =& get_instance();
-		// $config = [
-		// 	'protocol' => 'smtp',
-		// 	'smtp_host' => 'ssl://smtp.googlemail.com',
-		// 	'smtp_user' => 'kebayatude@gmail.com',
-		// 	'smtp_pass' => 'mwqntoowdztazxpi',
-		// 	'smtp_port' => 465,
-		// 	'mailtype' => 'html',
-		// 	'charset' => 'utf-8',
-		// 	'newline' => "\r\n"
-		// ];
-		$config = [
-			'protocol' => 'smtp',
-			'smtp_host' => 'ssl://smtp.googlemail.com',
-			'smtp_user' => 'thriftexofficial@gmail.com',
-			'smtp_pass' => 'vtpxagsoquywuizj',
-			'smtp_port' => 465,
-			'mailtype' => 'html',
-			'charset' => 'utf-8',
-			'newline' => "\r\n"
-		];
-		// $config = [ 
-		// 	'protocol' => 'smtp',
-		// 	'smtp_host' => 'mail.thriftex.id',
-		// 	'smtp_user' => 'info@thriftex.id',
-		// 	'smtp_pass' => 'Thriftex2023#',
-		// 	'smtp_port' => 465,
-		// 	'mailtype' => 'html',
-		// 	'charset' => 'utf-8',
-		// 	'newline' => "\r\n"
-		// ];
-		$_this->load->library('email', $config);
-		$_this->email->initialize($config);
-		$_this->email->from('info@thriftex.id', 'thriftex.id');
-		$_this->email->to($kepada);
+class Smtp {
 
+  public function SendEmail($kepada, $subjek, $pesan, $buffer = null) {
 
-		$_this->email->subject($subjek);
-        $_this->email->message($pesan);
-		if(!empty($buffer)){
-			$_this->email->attach($buffer, 'attachment', 'report.pdf', 'application/pdf');
-		}
-		if ($_this->email->send()) {
-			$response = array(
-				'status'	=> true,
-				'msg'	=> 'Email berhasil dikirim'
-			);
-		} else {
-			$response = array(
-				'status'	=> false,
-				'msg'	=> $_this->email->print_debugger()
-			);
-		}
-		return $response;
-	}
+    $mail = new PHPMailer(true); // Set to true to enable exceptions
+
+    try {
+
+      // Server settings
+      $mail->isSMTP();                                            // Send using SMTP
+      $mail->Host       = 'ssl://smtp.googlemail.com';  // Set the SMTP server address
+      $mail->Port       = 465;                                    // Set the SMTP port number
+      $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+
+      // Set your Gmail credentials
+      $mail->Username   = 'thriftexofficial@gmail.com';  // Replace with your Gmail address
+      $mail->Password   = 'vtpxagsoquywuizj';                // Replace with your app password
+
+      // Set email content
+      $mail->setFrom('info@thriftex.id', 'thriftex.id');
+      $mail->addAddress($kepada);                                // Add recipient
+      $mail->isHTML(true);                                         // Set email format to HTML
+      $mail->Subject = $subjek;
+      $mail->Body    = $pesan;
+
+      // Optional attachment
+      if (!empty($buffer)) {
+        $mail->addStringAttachment($buffer, 'report.pdf', 'attachment', 'application/pdf');
+      }
+
+      // Send the email
+      $mail->send();
+
+      $response = array(
+        'status' => true,
+        'msg' => 'Email berhasil dikirim'
+      );
+
+    } catch (Exception $e) {
+
+      $response = array(
+        'status' => false,
+        'msg' => 'Error sending email: ' . $mail->ErrorInfo
+      );
+    }
+
+    return $response;
+  }
 }
