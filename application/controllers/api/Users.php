@@ -37,6 +37,25 @@ class Users extends RestController {
             'data' => $users
         ],200);
     }
+
+    public function listvalidator_get() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        
+        $users = $this->user->list_pagination($limit, $page,$this->input->get('search'), 'validator');
+        return $this->response([
+            'data' => $users
+        ],200);
+    }
     
     public function validators_get() {
         $this->authorization_token->authtoken();

@@ -257,7 +257,7 @@
 					"formdata": [
 						{
 							"key": "refresh_token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0NyIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6Im1pbWkiLCJlbWFpbCI6ImtlbGFzZHVhZGVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibm9faHAiOiI5ODEyMDkzODEwOTI4MyIsImplbmlzX2tlbGFtaW4iOiJsYWtpLWxha2kiLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOm51bGwsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiI2MTQ4IiwiQVBJX1RJTUUiOjM0MjczMzIyNDZ9.VJb1iSTb4d0FzJsTrdiPnVNDCha445R5so2sFVvvVuI",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0NyIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6Im1pbWkiLCJlbWFpbCI6ImtlbGFzZHVhZGVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibm9faHAiOiI5ODEyMDkzODEwOTI4MyIsImplbmlzX2tlbGFtaW4iOiJsYWtpLWxha2kiLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOm51bGwsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiI2MTQ4IiwiQVBJX1RJTUUiOjM0MjczMzQzMjZ9.qXpobURbfJeACObq3fESknpN3zLjWHcRu8ROU7wwwb4",
 							"type": "text"
 						}
 					]
@@ -1299,28 +1299,7 @@
 				],
 				"body": {
 					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "nama",
-							"value": "harumi",
-							"type": "text"
-						},
-						{
-							"key": "email",
-							"value": "kelasduade@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "123123123",
-							"type": "text"
-						},
-						{
-							"key": "passconf",
-							"value": "123123123",
-							"type": "text"
-						}
-					]
+					"formdata": []
 				},
 				"url": {
 					"raw": "{{base_api}}/users/validatetoken",
@@ -2056,7 +2035,7 @@
 			]
 		},
 		{
-			"name": "list brand",
+			"name": "list validator",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -2067,13 +2046,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_api}}/users/brands?page=1&search=Converse",
+					"raw": "{{base_api}}/users/validators?page=1&search=Converse",
 					"host": [
 						"{{base_api}}"
 					],
 					"path": [
 						"users",
-						"brands"
+						"validators"
 					],
 					"query": [
 						{
@@ -2105,13 +2084,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_api}}/users/brands?page=1&search=Converse",
+							"raw": "{{base_api}}/users/validators?page=1&search=Converse",
 							"host": [
 								"{{base_api}}"
 							],
 							"path": [
 								"users",
-								"brands"
+								"validators"
 							],
 							"query": [
 								{
@@ -2136,7 +2115,7 @@
 					"header": [
 						{
 							"key": "Date",
-							"value": "Sat, 20 Apr 2024 13:48:02 GMT"
+							"value": "Sun, 21 Apr 2024 03:31:07 GMT"
 						},
 						{
 							"key": "Server",
@@ -2172,7 +2151,7 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "217"
+							"value": "2410"
 						},
 						{
 							"key": "Keep-Alive",
@@ -2188,7 +2167,144 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"data\": {\n        \"total_pages\": 1,\n        \"total_data\": 1,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"2\",\n                \"kategori_id\": \"2\",\n                \"brand_name\": \"Converse\",\n                \"foto\": \"-\",\n                \"deskripsi\": \"-\",\n                \"created_at\": \"2023-04-04 08:41:09\",\n                \"updated_at\": \"2023-04-04 08:41:09\"\n            }\n        ]\n    }\n}"
+					"body": "{\n    \"data\": {\n        \"total_pages\": 242,\n        \"total_data\": 2411,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"1\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"ads\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:01:21\",\n                \"updated_at\": \"2023-04-03 18:01:12\"\n            },\n            {\n                \"id\": \"2\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asda\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:18:38\",\n                \"updated_at\": \"2023-04-03 18:18:28\"\n            },\n            {\n                \"id\": \"3\",\n                \"legit_id\": \"50\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 03:38:30\",\n                \"created_at\": \"2023-04-04 09:38:47\",\n                \"updated_at\": \"2023-04-04 03:38:30\"\n            },\n            {\n                \"id\": \"6\",\n                \"legit_id\": \"52\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"halo ini catatan\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:18:22\",\n                \"created_at\": \"2023-04-04 16:18:22\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"7\",\n                \"legit_id\": \"49\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"fake ini bos, label rusak\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:27:36\",\n                \"created_at\": \"2023-04-04 16:27:36\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"8\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:38:51\",\n                \"created_at\": \"2023-04-04 16:38:51\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"9\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:41:57\",\n                \"created_at\": \"2023-04-04 16:41:57\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"10\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:42:10\",\n                \"created_at\": \"2023-04-04 16:42:10\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"11\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:00\",\n                \"created_at\": \"2023-04-04 16:44:00\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"12\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:09\",\n                \"created_at\": \"2023-04-04 16:44:09\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "list user validator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_api}}/users/validators?page=1&search=Converse",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"validators"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "Converse"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_api}}/users/validators?page=1&search=Converse",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"validators"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Converse"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 21 Apr 2024 03:31:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2410"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"total_pages\": 242,\n        \"total_data\": 2411,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"1\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"ads\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:01:21\",\n                \"updated_at\": \"2023-04-03 18:01:12\"\n            },\n            {\n                \"id\": \"2\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asda\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:18:38\",\n                \"updated_at\": \"2023-04-03 18:18:28\"\n            },\n            {\n                \"id\": \"3\",\n                \"legit_id\": \"50\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 03:38:30\",\n                \"created_at\": \"2023-04-04 09:38:47\",\n                \"updated_at\": \"2023-04-04 03:38:30\"\n            },\n            {\n                \"id\": \"6\",\n                \"legit_id\": \"52\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"halo ini catatan\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:18:22\",\n                \"created_at\": \"2023-04-04 16:18:22\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"7\",\n                \"legit_id\": \"49\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"fake ini bos, label rusak\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:27:36\",\n                \"created_at\": \"2023-04-04 16:27:36\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"8\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:38:51\",\n                \"created_at\": \"2023-04-04 16:38:51\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"9\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:41:57\",\n                \"created_at\": \"2023-04-04 16:41:57\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"10\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:42:10\",\n                \"created_at\": \"2023-04-04 16:42:10\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"11\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:00\",\n                \"created_at\": \"2023-04-04 16:44:00\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"12\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:09\",\n                \"created_at\": \"2023-04-04 16:44:09\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            }\n        ]\n    }\n}"
 				}
 			]
 		}

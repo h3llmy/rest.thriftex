@@ -21,7 +21,7 @@ class User_model extends MY_Model
     //     return $this->db->affected_rows();
     // }
 
-	public function list_pagination($limit, $page_number, $search = NULL) {
+	public function list_pagination($limit, $page_number, $search = NULL, $role = NULL) {
 		$offset = ($page_number - 1) * $limit;
 	
 		// Initialize the query builder
@@ -38,6 +38,10 @@ class User_model extends MY_Model
 			$this->db->or_like('register_tipe', $search, 'both');
 			$this->db->or_like('user_code', $search, 'both');
 			$this->db->group_end();
+		}
+
+		if (!empty($role)) {
+			$this->db->where($this->_table_name.'.role',$role);
 		}
 	
 		// Count the total filtered data
