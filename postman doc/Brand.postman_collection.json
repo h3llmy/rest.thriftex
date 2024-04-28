@@ -19,7 +19,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_api}}/brand/list?page=1&limit=10",
+					"raw": "{{base_api}}/brand/list?limit=100000&page=1",
 					"host": [
 						"{{base_api}}"
 					],
@@ -29,17 +29,17 @@
 					],
 					"query": [
 						{
-							"key": "page",
-							"value": "1"
-						},
-						{
 							"key": "search",
 							"value": "Converse",
 							"disabled": true
 						},
 						{
 							"key": "limit",
-							"value": "10"
+							"value": "100000"
+						},
+						{
+							"key": "page",
+							"value": "1"
 						}
 					]
 				}
@@ -156,7 +156,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_api}}/brand/detail?id=4",
+					"raw": "{{base_api}}/brand/detail?id=17",
 					"host": [
 						"{{base_api}}"
 					],
@@ -167,7 +167,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "4"
+							"value": "17"
 						}
 					]
 				}
@@ -279,17 +279,7 @@
 					"formdata": [
 						{
 							"key": "brand_name",
-							"value": "test brand",
-							"type": "text"
-						},
-						{
-							"key": "deskripsi",
 							"value": "something",
-							"type": "text"
-						},
-						{
-							"key": "kategori_id",
-							"value": "8",
 							"type": "text"
 						},
 						{
@@ -430,16 +420,6 @@
 							"type": "text"
 						},
 						{
-							"key": "deskripsi",
-							"value": "something",
-							"type": "text"
-						},
-						{
-							"key": "kategori_id",
-							"value": "8",
-							"type": "text"
-						},
-						{
 							"key": "foto",
 							"type": "file",
 							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
@@ -447,7 +427,7 @@
 					]
 				},
 				"url": {
-					"raw": "{{base_api}}/brand/update?id=15",
+					"raw": "{{base_api}}/brand/update?id=17",
 					"host": [
 						"{{base_api}}"
 					],
@@ -458,7 +438,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "15"
+							"value": "17"
 						}
 					]
 				}

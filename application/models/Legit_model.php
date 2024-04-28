@@ -73,7 +73,8 @@ class Legit_model extends MY_Model
 		return $this->db->get($this->_table_name)->row();
 	}
 
-	public function getLegitListByStatus($brand_id,$tipe=null,$brand_name=null){
+	public function getLegitListByStatus($brand_id,$tipe=null,$brand_name=null, $limit = NULL, $page_number = NULL){
+		$offset = ($page_number - 1) * $limit;
 		// $this->db->select('tbl_legit_check.id,tbl_legit_check.case_code,tbl_legit_check.user_id,tbl_legit_check.legit_status,tbl_legit_check.submit_time,tbl_gambar_legit.file_path,tbl_legit_check_detail.nama_item,tbl_legit_check_detail.nama_brand,tbl_validator.check_result,tbl_brand.brand_name');
 		$this->db->select('tbl_legit_check.id,tbl_legit_check.case_code,tbl_legit_check.user_id,tbl_legit_check.legit_status,tbl_legit_check.submit_time,tbl_gambar_legit.file_path,tbl_legit_check_detail.nama_item,tbl_legit_check_detail.nama_brand as brand_name,tbl_validator.check_result');
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
@@ -102,7 +103,22 @@ class Legit_model extends MY_Model
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_gambar_legit.legit_id');
 		$this->db->group_by('tbl_validator.legit_id');
-		return $this->db->get($this->_table_name)->result();
+
+		// Count the total filtered data
+		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
+
+		// Calculate total pages
+		$total_pages = ceil($total_data_count / $limit);
+
+		$this->db->limit($limit, $offset);
+
+		$paginated_data = $this->db->get()->result();
+		return array(
+			'total_pages' => $total_pages,
+			'total_data' => $total_data_count,
+			'current_page' => $page_number,
+			'data' => $paginated_data,
+		);
 		// echo $this->db->last_query(); die;
 	}
 

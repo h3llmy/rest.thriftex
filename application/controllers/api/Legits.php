@@ -284,14 +284,16 @@ class Legits extends RestController {
         $headers = $this->input->request_headers();
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
         $tipe = $this->get('tipe');
-        // var_dump($decodedToken['data']->validator_kategori_id);
-        $nama_brand = '';
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        $nama_brand = NULL;
         $get_brand_name = $this->brand->get_by(array('id' => $decodedToken['data']->validator_brand_id),null,null,true,array('id','brand_name'));
         if(!empty($get_brand_name)){
             $nama_brand = $get_brand_name->brand_name;
         }
-        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,$nama_brand);
-        foreach ($dataLegit as $key) {
+        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,$nama_brand, $limit, $page);
+        foreach ($dataLegit['data'] as $key) {
             // if($key->check_result == 'preview'){
             //     $key->check_result = 'Checking';
             // }else
@@ -417,7 +419,8 @@ class Legits extends RestController {
             'total_user'  => $this->user->count(array('role' => 'user')),
             'total_validator'=> $this->user->count(array('role' => 'validator')),
             'total_checked'  => $this->validator->count(NULL, array("check_result" => 'processing')),
-            'total_progress'  => $this->validator->count(array("check_result" => 'processing')),
+            'total_pending'  => $this->validator->count(array("check_result" => 'processing')),
+            'total_legit_check'  => $this->validator->count(),
         );
         $this->response([
             'status' => true,
