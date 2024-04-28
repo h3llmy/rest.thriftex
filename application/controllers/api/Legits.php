@@ -217,18 +217,24 @@ class Legits extends RestController {
 
         $limit = (int)($this->input->get('limit') ?? 10);
         $page = (int)($this->input->get('page') ?? 1);
+        $search = $this->input->get('search');
 
-        $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page);
-        if (!empty($dataLegit->data)) {
-            foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
-                if($key->data->check_result == 'real'){
-                    $key->data->check_result = 'Original';
+        $dataLegit = NULL;
+        if ($decodedToken['data']->role == 'admin') {
+            $dataLegit = $this->legit->getLegitListAll($limit, $page, $search);
+        } else {
+            $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page, $search);
+        }
+        if (!empty($dataLegit['data'])) {
+            foreach ($dataLegit['data'] as $key) {
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
                 }
-                if($key->data->check_result == null){
-                    $key->data->check_result = 'Waiting';
+                if($key->check_result == 'real'){
+                    $key->check_result = 'Original';
+                }
+                if($key->check_result == null){
+                    $key->check_result = 'Waiting';
                 }
             }
         }
@@ -293,15 +299,17 @@ class Legits extends RestController {
             $nama_brand = $get_brand_name->brand_name;
         }
         $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,$nama_brand, $limit, $page);
-        foreach ($dataLegit['data'] as $key) {
-            // if($key->check_result == 'preview'){
-            //     $key->check_result = 'Checking';
-            // }else
-            if($key->check_result == 'real'){
-                $key->check_result = 'Original';
-            }
-            if($key->check_result == null){
-                $key->check_result = 'Waiting';
+        if (!empty($dataLegit['data'])) {
+            foreach ($dataLegit['data'] as $key) {
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
+                if($key->check_result == 'real'){
+                    $key->check_result = 'Original';
+                }
+                if($key->check_result == null){
+                    $key->check_result = 'Waiting';
+                }
             }
         }
         $this->response([
