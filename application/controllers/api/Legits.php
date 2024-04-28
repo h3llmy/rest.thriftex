@@ -261,9 +261,9 @@ class Legits extends RestController {
         $dataLegit = $this->legit->getLegitListUserDetail($user_id,$case_code);
         if($dataLegit){
             foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
                 if($key->check_result == 'real'){
                     $key->check_result = 'Original';
                 }
