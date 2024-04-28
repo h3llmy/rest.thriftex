@@ -48,7 +48,7 @@
 						},
 						{
 							"key": "user_id",
-							"value": "1442",
+							"value": "1447",
 							"type": "text"
 						},
 						{
@@ -57,9 +57,21 @@
 							"type": "text"
 						},
 						{
+							"key": "purchase",
+							"value": "offline",
+							"type": "text"
+						},
+						{
 							"key": "legitimage[]",
 							"type": "file",
-							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+							"src": [
+								"/C:/Users/helmy/OneDrive/Pictures/5d839f88c1003248c146f0d7133cd45e_5109157396057309691.png",
+								"/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
+								"/C:/Users/helmy/OneDrive/Pictures/348439494_1539400996587506_2688884258340664716_n.jpg",
+								"/C:/Users/helmy/OneDrive/Pictures/ImgCreator.ai  Anime (1).png",
+								"/C:/Users/helmy/OneDrive/Pictures/ImgCreator.ai  Anime Colorful (1).png",
+								"/C:/Users/helmy/OneDrive/Pictures/ImgCreator.ai  Anime.png"
+							]
 						}
 					]
 				},
@@ -689,13 +701,23 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/validatordo",
+					"raw": "{{base_api}}/legits/validatordo?page=1&limit=10",
 					"host": [
 						"{{base_api}}"
 					],
 					"path": [
 						"legits",
 						"validatordo"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
 					]
 				}
 			},

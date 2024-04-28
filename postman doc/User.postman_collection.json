@@ -1073,12 +1073,12 @@
 					"formdata": [
 						{
 							"key": "nama",
-							"value": "harumi",
+							"value": "validator",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "kelasduade@gmail.com",
+							"value": "validator@gmail.com",
 							"type": "text"
 						},
 						{
@@ -1093,16 +1093,15 @@
 						},
 						{
 							"key": "role",
-							"value": "validator",
+							"value": "admin",
 							"description": "optional",
 							"type": "text"
 						},
 						{
 							"key": "validator_brand_id",
-							"value": "999",
+							"value": "",
 							"description": "optional",
-							"type": "text",
-							"disabled": true
+							"type": "text"
 						}
 					]
 				},
@@ -1713,7 +1712,7 @@
 						},
 						{
 							"key": "no_hp",
-							"value": "98120938109283",
+							"value": "12345678",
 							"type": "text"
 						},
 						{
@@ -1744,7 +1743,8 @@
 						{
 							"key": "foto",
 							"type": "file",
-							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
+							"disabled": true
 						}
 					]
 				},
@@ -2046,7 +2046,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_api}}/users/validators?page=1&search=Converse",
+					"raw": "{{base_api}}/users/validators?page=1",
 					"host": [
 						"{{base_api}}"
 					],
@@ -2066,7 +2066,8 @@
 						},
 						{
 							"key": "search",
-							"value": "Converse"
+							"value": "Converse",
+							"disabled": true
 						}
 					]
 				}
@@ -2183,13 +2184,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_api}}/users/validators?page=1&search=Converse",
+					"raw": "{{base_api}}/users/listvalidator?page=1",
 					"host": [
 						"{{base_api}}"
 					],
 					"path": [
 						"users",
-						"validators"
+						"listvalidator"
 					],
 					"query": [
 						{
@@ -2203,7 +2204,8 @@
 						},
 						{
 							"key": "search",
-							"value": "Converse"
+							"value": "Converse",
+							"disabled": true
 						}
 					]
 				}
