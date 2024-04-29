@@ -30,7 +30,6 @@ class Email extends RestController {
                 'pesan' => $this->input->post('pesan'),
             );
             $html = $this->load->view('email/kontak_email.php',$data_pesan,true);
-          
             $kepada = 'Thriftexofficial@gmail.com';
             $send = $this->smtp->SendEmail($kepada,$subjek,$html);
             $this->response($send);

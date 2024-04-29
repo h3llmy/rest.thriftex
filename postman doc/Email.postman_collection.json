@@ -10,8 +10,43 @@
 		{
 			"name": "contact us",
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "harumi",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "pesan",
+							"value": "helloow guys",
+							"type": "text"
+						},
+						{
+							"key": "no_tlp",
+							"value": "089999999999",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/email/sendemailkontak",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"email",
+						"sendemailkontak"
+					]
+				}
 			},
 			"response": []
 		}

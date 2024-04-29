@@ -31,8 +31,9 @@ class Users extends RestController {
 
         $limit = (int)($this->input->get('limit') ?? 10);
         $page = (int)($this->input->get('page') ?? 1);
+        $role = $this->input->get('role');
         
-        $users = $this->user->list_pagination($limit, $page,$this->input->get('search'));
+        $users = $this->user->list_pagination($limit, $page,$this->input->get('search'), $role);
         return $this->response([
             'data' => $users
         ],200);
@@ -108,6 +109,8 @@ class Users extends RestController {
                 $data['role'] = $this->input->post('role');
                 $data['validator_brand_id'] = $this->input->post('validator_brand_id');
                 // $data['validator_kategori_id'] = $this->input->post('validator_kategori_id');
+            } else if ($this->input->post('role') == 'admin') {
+                $data['validator_brand_id'] = '999';
             }
             $data['user_code'] = intCodeRandom(4);
 
