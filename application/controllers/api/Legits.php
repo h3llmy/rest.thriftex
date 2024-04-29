@@ -258,8 +258,13 @@ class Legits extends RestController {
 
         $case_code = $this->get('case_code');
         $user_id = $decodedToken['data']->user_id;
-        $dataLegit = $this->legit->getLegitListUserDetail($user_id,$case_code);
-        if($dataLegit){
+        $dataLegit = NULL;
+        if ($decodedToken['data']->role == 'admin' || $decodedToken['data']->role == 'validator') {
+            $dataLegit = $this->legit->getLegitListUserDetail(NULL, $case_code);
+        } else {
+            $dataLegit = $this->legit->getLegitListUserDetail($user_id,$case_code);
+        }
+        if(!empty($dataLegit)){
             foreach ($dataLegit as $key) {
                 if($key->check_result == 'processing'){
                     $key->check_result = 'Canceled';

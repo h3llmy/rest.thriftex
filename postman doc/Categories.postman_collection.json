@@ -1,0 +1,29 @@
+{
+	"info": {
+		"_postman_id": "cfd7f659-105b-4265-9a74-972dd07c3189",
+		"name": "Categories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23469470",
+		"_collection_link": "https://red-space-400771.postman.co/workspace/thriftex~c79ecd4c-06f8-4602-9b4f-edfd79e4f3d0/collection/23469470-cfd7f659-105b-4265-9a74-972dd07c3189?action=share&source=collection_link&creator=23469470"
+	},
+	"item": [
+		{
+			"name": "list kategori",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_api}}/kategori/list",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"kategori",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

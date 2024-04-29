@@ -211,121 +211,6 @@
 			]
 		},
 		{
-			"name": "validation",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{access_token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "legit_id",
-							"value": "68",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{base_api}}/legits/validation",
-					"host": [
-						"{{base_api}}"
-					],
-					"path": [
-						"legits",
-						"validation"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Success Response",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "{{access_token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "legit_id",
-									"value": "68",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{base_api}}/legits/validation",
-							"host": [
-								"{{base_api}}"
-							],
-							"path": [
-								"legits",
-								"validation"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Date",
-							"value": "Tue, 05 Mar 2024 13:16:20 GMT"
-						},
-						{
-							"key": "Server",
-							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "PHP/8.1.25"
-						},
-						{
-							"key": "Expires",
-							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
-						},
-						{
-							"key": "Cache-Control",
-							"value": "no-store, no-cache, must-revalidate"
-						},
-						{
-							"key": "Pragma",
-							"value": "no-cache"
-						},
-						{
-							"key": "Content-Length",
-							"value": "61"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5, max=100"
-						},
-						{
-							"key": "Connection",
-							"value": "Keep-Alive"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"status\": true,\n    \"message\": \"Hasil validasi disimpan\",\n    \"data\": []\n}"
-				}
-			]
-		},
-		{
 			"name": "list",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -497,7 +382,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/datadetail?case_code=1944-0HAX",
+					"raw": "{{base_api}}/legits/datadetail?case_code=6148-5HAX",
 					"host": [
 						"{{base_api}}"
 					],
@@ -508,7 +393,7 @@
 					"query": [
 						{
 							"key": "case_code",
-							"value": "1944-0HAX"
+							"value": "6148-5HAX"
 						}
 					]
 				}

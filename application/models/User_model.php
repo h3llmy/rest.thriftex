@@ -126,4 +126,22 @@ class User_model extends MY_Model
 		
 		return $this->db->affected_rows();
 	}
+
+	public function block_user($userId, $isActive = TRUE) {
+		$isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
+		// Check if the user with the given ID exists
+		$existingUser = $this->db->get_where($this->_table_name, array('id' => $userId))->row_array();
+	
+		if (!$existingUser) {
+			// User not found, return an error code or message
+			throw new  Exception('user tidak ditemukan'); // You can choose an appropriate value to indicate the error
+		}
+	
+		// User exists, proceed with the deletion
+		$this->db->set(['is_active' => $isActive]);
+		$this->db->where('id', $userId);
+		$this->db->update($this->_table_name);
+		
+		return $this->db->affected_rows();
+	}
 }
