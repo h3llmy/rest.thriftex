@@ -81,19 +81,24 @@ class Legit_model extends MY_Model
 		);
 	}
 
-	public function getLegitListUserDetail($id,$case_code=null){
-		if($id == null || empty($id)){
-			return null;
-		}
+	public function getLegitListUserDetail($id = NULL,$case_code=null){
+		// if($id == null || empty($id)){
+		// 	return null;
+		// }
 		$this->db->select('tbl_legit_check.id,tbl_legit_check.case_code,tbl_legit_check.user_id,tbl_legit_check.legit_status,tbl_legit_check.submit_time,tbl_legit_check_detail.nama_item,tbl_validator.check_result, 
 		tbl_legit_check_detail.toko_pembelian,
 		tbl_legit_check_detail.catatan,
 		tbl_legit_check_detail.kondisi,
-		tbl_legit_check_detail.purchase');
+		tbl_kategori.kategori_name,
+		tbl_legit_check_detail.purchase'
+		);
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_validator','tbl_validator.legit_id = tbl_legit_check.id','left');
+		$this->db->join('tbl_kategori','tbl_kategori.id = tbl_legit_check_detail.kategori_id','left');
 		$this->db->where('tbl_legit_check.legit_status','posted');
-		$this->db->where('tbl_legit_check.user_id',$id);
+		if (!empty($id)) {
+			$this->db->where('tbl_legit_check.user_id',$id);
+		}
 		$this->db->where('tbl_legit_check.case_code',$case_code);
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_validator.legit_id');
@@ -171,7 +176,7 @@ class Legit_model extends MY_Model
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_validator.legit_id');
 		return $this->db->get($this->_table_name)->result();
-		echo $this->db->last_query(); die;
+		// echo $this->db->last_query(); die;
 	}
 
 	public function getLegitListPublish($search=null){

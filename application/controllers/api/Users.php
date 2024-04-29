@@ -76,6 +76,27 @@ class Users extends RestController {
             'data' => $users
         ],200);
     }
+
+    public function updatevalidator_post() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $this->user->update([
+            'nama' => $this->input->post('nama'),
+            'email' => $this->input->post('email'),
+            'validator_brand_id' => $this->input->post('validator_brand_id'),
+        ], ['id' => $this->input->post('validator_id')]);
+
+        return $this->response([
+            'message' => 'success'
+        ], 200);
+    }
     
     public function register_post()
 	{   
