@@ -97,6 +97,23 @@ class Users extends RestController {
             'message' => 'success'
         ], 200);
     }
+
+    public function blockuser_post() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $this->user->block_user($this->input->post('user_id'),$this->input->post('is_active'));
+
+        return $this->response([
+            'message' => 'success'
+        ], 200);
+    }
     
     public function register_post()
 	{   
@@ -255,7 +272,13 @@ class Users extends RestController {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         if(isset($email)){
-            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto'));
+            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto', 'is_active'));
+            if ($cek_email->is_active == FALSE) {
+                $this->response([
+                    'status' => false,
+                    'message'   => 'akun tidak aktif!',
+                ],400);
+            }
             if($cek_email != null){
                 $this->user_detail = $cek_email;
             }else{
