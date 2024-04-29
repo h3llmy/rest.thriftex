@@ -89,9 +89,12 @@ class Legit_model extends MY_Model
 		tbl_legit_check_detail.toko_pembelian,
 		tbl_legit_check_detail.catatan,
 		tbl_legit_check_detail.kondisi,
-		tbl_legit_check_detail.purchase');
+		tbl_kategori.kategori_name,
+		tbl_legit_check_detail.purchase'
+		);
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_validator','tbl_validator.legit_id = tbl_legit_check.id','left');
+		$this->db->join('tbl_kategori','tbl_kategori.id = tbl_legit_check_detail.kategori_id','left');
 		$this->db->where('tbl_legit_check.legit_status','posted');
 		$this->db->where('tbl_legit_check.user_id',$id);
 		$this->db->where('tbl_legit_check.case_code',$case_code);

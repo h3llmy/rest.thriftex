@@ -1286,6 +1286,229 @@
 			]
 		},
 		{
+			"name": "update validator",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "validator",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "validator@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "admin",
+							"description": "optional",
+							"type": "text"
+						},
+						{
+							"key": "validator_brand_id",
+							"value": "1",
+							"description": "optional",
+							"type": "text"
+						},
+						{
+							"key": "validator_id",
+							"value": "1450",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/updatevalidator",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"updatevalidator"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Error Validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/register",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:57:47 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "331"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Nama tidak boleh kosong!\\nEmail tidak boleh kosong!\\nPassword tidak boleh kosong!\\nKonfirmsi Password tidak boleh kosong!\\n\",\n    \"error_data\": {\n        \"nama\": \"Nama tidak boleh kosong!\",\n        \"email\": \"Email tidak boleh kosong!\",\n        \"password\": \"Password tidak boleh kosong!\",\n        \"passconf\": \"Konfirmsi Password tidak boleh kosong!\"\n    }\n}"
+				},
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/register",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:58:17 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Register Berhasil\",\n    \"data\": []\n}"
+				}
+			]
+		},
+		{
 			"name": "Validate Token",
 			"request": {
 				"method": "POST",
@@ -2184,13 +2407,13 @@
 					}
 				],
 				"url": {
-					"raw": "{{base_api}}/users/listvalidator?page=1",
+					"raw": "{{base_api}}/users/list?page=1&role=validator",
 					"host": [
 						"{{base_api}}"
 					],
 					"path": [
 						"users",
-						"listvalidator"
+						"list"
 					],
 					"query": [
 						{
@@ -2206,6 +2429,10 @@
 							"key": "search",
 							"value": "Converse",
 							"disabled": true
+						},
+						{
+							"key": "role",
+							"value": "validator"
 						}
 					]
 				}
