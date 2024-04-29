@@ -16,7 +16,7 @@ class SConfig
     // *     production
 
     // offlien
-    var $_site_url = 'http://localhost:8000/my/ci3api/';
+    var $_site_url = 'http://localhost/rest.thriftex';
     var $_app_mode = 'development';
     var $_host_name = 'localhost';
     var $_database_name = 'thriftex';
