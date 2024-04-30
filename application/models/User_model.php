@@ -25,7 +25,7 @@ class User_model extends MY_Model
 		$offset = ($page_number - 1) * $limit;
 	
 		// Initialize the query builder
-		$this->db->select('id, nama, username, email, foto, role, register_tipe, validator_brand_id, validator_kategori_id, user_code, gid, no_hp, jenis_kelamin, created_at, updated_at');
+		$this->db->select('id, nama, username, email, foto, role, register_tipe, validator_brand_id, validator_kategori_id, user_code, gid, no_hp, jenis_kelamin, is_active, created_at, updated_at');
 	
 		// Apply search filters if provided
 		if (!empty($search)) {
@@ -55,6 +55,10 @@ class User_model extends MY_Model
 	
 		// Fetch paginated data
 		$paginated_data = $this->db->get()->result();
+
+		foreach ($paginated_data as $data) {
+			$data->is_active = $data->is_active == '1' ? TRUE : FALSE;
+		}
 	
 		// Return an array containing paginated data, total pages, and total data count
 		return array(
