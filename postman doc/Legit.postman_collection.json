@@ -28,7 +28,7 @@
 						},
 						{
 							"key": "brand",
-							"value": "Vans",
+							"value": "testings",
 							"type": "text"
 						},
 						{
@@ -229,13 +229,19 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/data",
+					"raw": "{{base_api}}/legits/data?page=1",
 					"host": [
 						"{{base_api}}"
 					],
 					"path": [
 						"legits",
 						"data"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -382,7 +388,11 @@
 					"formdata": []
 				},
 				"url": {
+<<<<<<< HEAD
+					"raw": "{{base_api}}/legits/datadetail?case_code=6148-9HAX",
+=======
 					"raw": "{{base_api}}/legits/datadetail?case_code=6148-5HAX",
+>>>>>>> 7f337317f90d6133f400b664b96465bbb2499e69
 					"host": [
 						"{{base_api}}"
 					],
@@ -393,7 +403,11 @@
 					"query": [
 						{
 							"key": "case_code",
+<<<<<<< HEAD
+							"value": "6148-9HAX"
+=======
 							"value": "6148-5HAX"
+>>>>>>> 7f337317f90d6133f400b664b96465bbb2499e69
 						}
 					]
 				}
@@ -750,7 +764,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/validdatadetail?case_code=1944-14HAX",
+					"raw": "{{base_api}}/legits/validdatadetail?case_code=-1JDX",
 					"host": [
 						"{{base_api}}"
 					],
@@ -761,7 +775,7 @@
 					"query": [
 						{
 							"key": "case_code",
-							"value": "1944-14HAX"
+							"value": "-1JDX"
 						}
 					]
 				}
