@@ -218,12 +218,14 @@ class Legits extends RestController {
         $limit = (int)($this->input->get('limit') ?? 10);
         $page = (int)($this->input->get('page') ?? 1);
         $search = $this->input->get('search');
+        $status = $this->input->get('status');
 
         $dataLegit = NULL;
         if ($decodedToken['data']->role == 'admin') {
-            $dataLegit = $this->legit->getLegitListAll($limit, $page, $search);
+            $dataLegit = $this->legit->getLegitListAll($limit, $page, $search, $status);
         } else {
-            $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page, $search);
+            $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page, $search, $status);
+
         }
         if (!empty($dataLegit['data'])) {
             foreach ($dataLegit['data'] as $key) {
@@ -330,9 +332,9 @@ class Legits extends RestController {
         $dataLegit = $this->legit->getValidateDetail($case_code);
         if($dataLegit){
             foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
                 if($key->check_result == 'real'){
                     $key->check_result = 'Original';
                 }
@@ -461,9 +463,9 @@ class Legits extends RestController {
         $dataLegit = $this->legit->getLegitListPublish();
         if($dataLegit){
             foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
                 if($key->check_result == 'real'){
                     $key->check_result = 'Original';
                 }
