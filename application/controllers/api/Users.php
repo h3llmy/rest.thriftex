@@ -102,6 +102,7 @@ class Users extends RestController {
         // Perform the update
         $this->user->update($update_data, ['id' => $this->input->post('validator_id')]);
 
+
         return $this->response([
             'message' => 'success'
         ], 200);

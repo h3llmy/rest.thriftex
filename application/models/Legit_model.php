@@ -24,6 +24,7 @@ class Legit_model extends MY_Model
 		if (!empty($status)) {
 			$this->db->where('tbl_legit_check.legit_status', $status);
 		}
+
 		// Count the total filtered data
 		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
 

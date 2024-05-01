@@ -225,6 +225,7 @@ class Legits extends RestController {
             $dataLegit = $this->legit->getLegitListAll($limit, $page, $search, $status);
         } else {
             $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page, $search, $status);
+
         }
         if (!empty($dataLegit['data'])) {
             foreach ($dataLegit['data'] as $key) {
