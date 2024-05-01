@@ -50,7 +50,7 @@ class Validator_model extends MY_Model
 	}
 	
 	public function validator_data_checker($legit_id){
-		$this->db->select('tbl_validator.check_result,tbl_validator.check_note,tbl_validator.validator_user_id,tbl_validator.final_time_check,tbl_user.nama,tbl_user.role');
+		$this->db->select('tbl_validator.check_result,tbl_validator.processing_status,tbl_validator.check_note,tbl_validator.validator_user_id,tbl_validator.final_time_check,tbl_user.nama,tbl_user.role');
 		$this->db->join('tbl_user','tbl_user.id = tbl_validator.validator_user_id');
 		$this->db->where('tbl_validator.legit_id',$legit_id);
 		$this->db->where('tbl_user.role','validator');
