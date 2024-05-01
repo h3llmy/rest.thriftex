@@ -90,6 +90,7 @@ class Legit_model extends MY_Model
 		tbl_legit_check_detail.catatan,
 		tbl_legit_check_detail.kondisi,
 		tbl_legit_check_detail.nama_brand,
+
 		tbl_kategori.kategori_name,
 		tbl_legit_check_detail.purchase'
 		);
