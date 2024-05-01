@@ -21,6 +21,11 @@ class User_model extends MY_Model
     //     return $this->db->affected_rows();
     // }
 
+	public function get_by_email($email){
+		$this->db->where('email',$email);
+		return $this->db->get($this->_table_name)->row();
+	}
+
 	public function list_pagination($limit, $page_number, $search = NULL, $role = NULL) {
 		$offset = ($page_number - 1) * $limit;
 	
