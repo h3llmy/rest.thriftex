@@ -28,7 +28,7 @@
 						},
 						{
 							"key": "brand",
-							"value": "Vans",
+							"value": "testings",
 							"type": "text"
 						},
 						{
@@ -65,12 +65,12 @@
 							"key": "legitimage[]",
 							"type": "file",
 							"src": [
-								"/C:/Users/helmy/OneDrive/Pictures/5d839f88c1003248c146f0d7133cd45e_5109157396057309691.png",
 								"/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
 								"/C:/Users/helmy/OneDrive/Pictures/348439494_1539400996587506_2688884258340664716_n.jpg",
-								"/C:/Users/helmy/OneDrive/Pictures/ImgCreator.ai  Anime (1).png",
-								"/C:/Users/helmy/OneDrive/Pictures/ImgCreator.ai  Anime Colorful (1).png",
-								"/C:/Users/helmy/OneDrive/Pictures/ImgCreator.ai  Anime.png"
+								"/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
+								"/C:/Users/helmy/OneDrive/Pictures/348439494_1539400996587506_2688884258340664716_n.jpg",
+								"/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
+								"/C:/Users/helmy/OneDrive/Pictures/348439494_1539400996587506_2688884258340664716_n.jpg"
 							]
 						}
 					]
@@ -229,13 +229,19 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/data",
+					"raw": "{{base_api}}/legits/data?page=1",
 					"host": [
 						"{{base_api}}"
 					],
 					"path": [
 						"legits",
 						"data"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -382,7 +388,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/datadetail?case_code=6148-5HAX",
+					"raw": "{{base_api}}/legits/datadetail?case_code=6148-9HAX",
 					"host": [
 						"{{base_api}}"
 					],
@@ -393,7 +399,7 @@
 					"query": [
 						{
 							"key": "case_code",
-							"value": "6148-5HAX"
+							"value": "6148-9HAX"
 						}
 					]
 				}
@@ -750,7 +756,7 @@
 					"formdata": []
 				},
 				"url": {
-					"raw": "{{base_api}}/legits/validdatadetail?case_code=1944-14HAX",
+					"raw": "{{base_api}}/legits/validdatadetail?case_code=-1JDX",
 					"host": [
 						"{{base_api}}"
 					],
@@ -761,7 +767,7 @@
 					"query": [
 						{
 							"key": "case_code",
-							"value": "1944-14HAX"
+							"value": "-1JDX"
 						}
 					]
 				}
