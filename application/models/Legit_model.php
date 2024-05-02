@@ -10,18 +10,20 @@ class Legit_model extends MY_Model
 	protected $_order_by_type = 'desc';
     
 
-	public function getLegitListAll($limit, $page_number, $search = NULL) {
+	public function getLegitListAll($limit, $page_number, $search = NULL, $status = NULL) {
 		$offset = ($page_number - 1) * $limit;
 
 		$this->db->select('tbl_legit_check.id,tbl_legit_check.case_code,tbl_legit_check.user_id,tbl_legit_check.legit_status,tbl_legit_check.submit_time,tbl_gambar_legit.file_path,tbl_legit_check_detail.nama_item,tbl_validator.check_result');
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_gambar_legit','tbl_gambar_legit.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_validator','tbl_validator.legit_id = tbl_legit_check.id','left');
-		$this->db->where('tbl_legit_check.legit_status','posted');
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_gambar_legit.legit_id');
 		$this->db->group_by('tbl_validator.legit_id');
-
+		
+		if (!empty($status)) {
+			$this->db->where('tbl_legit_check.legit_status', $status);
+		}
 		// Count the total filtered data
 		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
 
@@ -89,13 +91,13 @@ class Legit_model extends MY_Model
 		tbl_legit_check_detail.toko_pembelian,
 		tbl_legit_check_detail.catatan,
 		tbl_legit_check_detail.kondisi,
+		tbl_legit_check_detail.nama_brand,
 		tbl_kategori.kategori_name,
 		tbl_legit_check_detail.purchase'
 		);
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_validator','tbl_validator.legit_id = tbl_legit_check.id','left');
 		$this->db->join('tbl_kategori','tbl_kategori.id = tbl_legit_check_detail.kategori_id','left');
-		$this->db->where('tbl_legit_check.legit_status','posted');
 		if (!empty($id)) {
 			$this->db->where('tbl_legit_check.user_id',$id);
 		}
