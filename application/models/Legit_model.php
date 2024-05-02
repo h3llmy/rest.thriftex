@@ -13,16 +13,19 @@ class Legit_model extends MY_Model
 	public function getLegitListAll($limit, $page_number, $search = NULL, $status = NULL) {
 		$offset = ($page_number - 1) * $limit;
 
-		$this->db->select('tbl_legit_check.id,tbl_legit_check.case_code,tbl_legit_check.user_id,tbl_legit_check.legit_status,tbl_legit_check.submit_time,tbl_gambar_legit.file_path,tbl_legit_check_detail.nama_item,tbl_validator.check_result');
+		$this->db->select('tbl_legit_check.id,tbl_legit_check.case_code,tbl_legit_check.user_id,tbl_legit_check.legit_status,tbl_legit_check.submit_time,tbl_gambar_legit.file_path,tbl_legit_check_detail.nama_item,tbl_validator.check_result,tbl_user.nama,tbl_brand.brand_name');
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_gambar_legit','tbl_gambar_legit.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_validator','tbl_validator.legit_id = tbl_legit_check.id','left');
+		$this->db->join('tbl_user','tbl_validator.validator_user_id = tbl_user.id','join');
+		$this->db->join('tbl_brand','tbl_user.validator_brand_id = tbl_brand.id','join');
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_gambar_legit.legit_id');
 		$this->db->group_by('tbl_validator.legit_id');
 		
+		$this->db->where('tbl_legit_check.legit_status', 'posted');
 		if (!empty($status)) {
-			$this->db->where('tbl_legit_check.legit_status', $status);
+			$this->db->where('tbl_validator.check_result', $status);
 		}
 		// Count the total filtered data
 		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
@@ -138,11 +141,11 @@ class Legit_model extends MY_Model
 		if(!empty($tipe)){
 			if($tipe == 'complete'){
 				$this->db->where('tbl_validator.check_result != ', 'processing');
-			}else{
+			} else if ($tipe == 'process') {
+				$this->db->where('tbl_validator.check_result', 'processing');
+			} else{
 				$this->db->where('tbl_validator.check_result',$tipe);
 			}
-		}else{
-			$this->db->where('tbl_validator.check_result',null);
 		}
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_gambar_legit.legit_id');

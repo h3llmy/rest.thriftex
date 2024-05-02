@@ -26,31 +26,33 @@ class User_model extends MY_Model
 		return $this->db->get($this->_table_name)->row();
 	}
 
-	public function list_pagination($limit, $page_number, $search = NULL, $role = NULL) {
+	public function list_pagination($limit, $page_number, $search = null, $role = null) {
 		$offset = ($page_number - 1) * $limit;
 	
 		// Initialize the query builder
-		$this->db->select('id, nama, username, email, foto, role, register_tipe, validator_brand_id, validator_kategori_id, user_code, gid, no_hp, jenis_kelamin, is_active, created_at, updated_at');
+		$this->db->select('tbl_user.id, tbl_user.nama, tbl_user.username, tbl_user.email, tbl_user.foto, tbl_user.role, tbl_user.register_tipe, tbl_user.validator_brand_id, tbl_user.validator_kategori_id, tbl_user.user_code, tbl_user.gid, tbl_user.no_hp, tbl_user.jenis_kelamin, tbl_user.is_active, tbl_user.created_at, tbl_user.updated_at, tbl_brand.brand_name');
+		$this->db->from('tbl_user');
+		$this->db->join('tbl_brand', 'tbl_user.validator_brand_id = tbl_brand.id', 'left'); // assuming it's a left join
 	
 		// Apply search filters if provided
 		if (!empty($search)) {
 			$this->db->group_start();
-			$this->db->like('id', $search, 'both');
-			$this->db->or_like('nama', $search, 'both');
-			$this->db->or_like('username', $search, 'both');
-			$this->db->or_like('email', $search, 'both');
-			$this->db->or_like('role', $search, 'both');
-			$this->db->or_like('register_tipe', $search, 'both');
-			$this->db->or_like('user_code', $search, 'both');
+			$this->db->like('tbl_user.id', $search, 'both');
+			$this->db->or_like('tbl_user.nama', $search, 'both');
+			$this->db->or_like('tbl_user.username', $search, 'both');
+			$this->db->or_like('tbl_user.email', $search, 'both');
+			$this->db->or_like('tbl_user.role', $search, 'both');
+			$this->db->or_like('tbl_user.register_tipe', $search, 'both');
+			$this->db->or_like('tbl_user.user_code', $search, 'both');
 			$this->db->group_end();
 		}
-
+	
 		if (!empty($role)) {
-			$this->db->where($this->_table_name.'.role',$role);
+			$this->db->where('tbl_user.role', $role);
 		}
 	
 		// Count the total filtered data
-		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
+		$total_data_count = $this->db->count_all_results('', false);
 	
 		// Calculate total pages
 		$total_pages = ceil($total_data_count / $limit);
@@ -60,9 +62,9 @@ class User_model extends MY_Model
 	
 		// Fetch paginated data
 		$paginated_data = $this->db->get()->result();
-
+	
 		foreach ($paginated_data as $data) {
-			$data->is_active = $data->is_active == '1' ? TRUE : FALSE;
+			$data->is_active = $data->is_active == '1' ? true : false;
 		}
 	
 		// Return an array containing paginated data, total pages, and total data count
@@ -73,6 +75,7 @@ class User_model extends MY_Model
 			'data' => $paginated_data,
 		);
 	}
+	
 	
     public function createUser($data){
 		// Check if the email already exists
