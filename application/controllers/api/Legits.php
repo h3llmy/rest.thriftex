@@ -296,10 +296,11 @@ class Legits extends RestController {
         $headers = $this->input->request_headers();
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
         $tipe = $this->get('type');
+        $search = $this->get('search');
 
         $limit = (int)($this->input->get('limit') ?? 10);
         $page = (int)($this->input->get('page') ?? 1);
-        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,NULL, $limit, $page);
+        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,NULL,NULL, $limit, $page, $search);
         if (!empty($dataLegit['data'])) {
             foreach ($dataLegit['data'] as $key) {
                 if($key->check_result == 'processing'){
