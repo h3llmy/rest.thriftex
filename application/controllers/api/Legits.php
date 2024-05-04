@@ -299,12 +299,7 @@ class Legits extends RestController {
 
         $limit = (int)($this->input->get('limit') ?? 10);
         $page = (int)($this->input->get('page') ?? 1);
-        $nama_brand = NULL;
-        $get_brand_name = $this->brand->get_by(array('id' => $decodedToken['data']->validator_brand_id),null,null,true,array('id','brand_name'));
-        if(!empty($get_brand_name)){
-            $nama_brand = $get_brand_name->brand_name;
-        }
-        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,$nama_brand, $limit, $page);
+        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,NULL, $limit, $page);
         if (!empty($dataLegit['data'])) {
             foreach ($dataLegit['data'] as $key) {
                 if($key->check_result == 'processing'){
