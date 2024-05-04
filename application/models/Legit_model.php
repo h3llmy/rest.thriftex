@@ -130,12 +130,7 @@ class Legit_model extends MY_Model
 		// $this->db->join('tbl_brand','tbl_legit_check_detail.brand_id = tbl_brand.id','left');
 		$this->db->where('tbl_legit_check.legit_status','posted');
 		if($brand_id != 999 || $brand_id != '999'){
-			if(!empty($brand_name)){
-				$this->db->group_start();
-				$this->db->where('tbl_legit_check_detail.brand_id',$brand_id);
-				$this->db->or_where('tbl_legit_check_detail.nama_brand',$brand_name);
-				$this->db->group_end();
-			}
+			$this->db->where('tbl_legit_check_detail.brand_id',$brand_id);
 			// $this->db->where('tbl_legit_check_detail.kategori_id',$brand_id);
 		}
 		if(!empty($tipe)){
