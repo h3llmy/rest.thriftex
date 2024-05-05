@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '41666500b3513da4393dbaf304d63f3c95ebb729',
+        'reference' => 'f3e587bc415424757cb5052705e986a60966f9d8',
         'name' => 'codeigniter/framework',
         'dev' => true,
     ),
@@ -43,7 +43,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '41666500b3513da4393dbaf304d63f3c95ebb729',
+            'reference' => 'f3e587bc415424757cb5052705e986a60966f9d8',
             'dev_requirement' => false,
         ),
         'doctrine/instantiator' => array(
@@ -153,6 +153,15 @@
             'aliases' => array(),
             'reference' => '4f7fd7836c6f332bb2933569e566a0d6c4cbed74',
             'dev_requirement' => true,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.9.1',
+            'version' => '6.9.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'reference' => '039de174cd9c17a8389754d3b877a2ed22743e18',
+            'dev_requirement' => false,
         ),
         'phpunit/php-code-coverage' => array(
             'pretty_version' => '9.2.31',

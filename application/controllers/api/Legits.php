@@ -58,47 +58,59 @@ class Legits extends RestController {
             $kondisi_barang = $this->input->post('kondisi_barang');
             $catatan = $this->input->post('catatan');
             $user_id = $this->input->post('user_id');
+            $purchase = $this->input->post('purchase');
             $this->form_validation->set_rules('kategori', 'Kategori', 'required');
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             $this->form_validation->set_rules('nama_item', 'Nama Item', 'required');
             $this->form_validation->set_rules('nama_toko', 'Nama Toko', 'required');
             $this->form_validation->set_rules('kondisi_barang', 'Kondisi Barang', 'required');
+            $this->form_validation->set_rules('purchase', 'Purchase', 'required');
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
             $this->form_validation->set_error_delimiters('', '');
             if(!$this->form_validation->run()) throw new Exception(validation_errors());
             
 
             $data_foto = array();
-            for($i = 0; $i < count(array_filter($_FILES['legitimage']['name']));$i++)
-            {
-                if(!empty($_FILES['legitimage']['name'][$i])){
-    
-                    $_FILES['file']['name'] = $_FILES['legitimage']['name'][$i];
-                    $_FILES['file']['type'] = $_FILES['legitimage']['type'][$i];
-                    $_FILES['file']['tmp_name'] = $_FILES['legitimage']['tmp_name'][$i];
-                    $_FILES['file']['error'] = $_FILES['legitimage']['error'][$i];
-                    $_FILES['file']['size'] = $_FILES['legitimage']['size'][$i];
-                
-                    if($this->upload->do_upload('file')){
-                        
-                        $uploadData = $this->upload->data();
-                        $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
-                        $data_foto[] = array(
-                            'nama_foto' => $imageUrl
-                        );
-                        unlink($uploadData['full_path']);
-                    }else{
-                        $error = array('error' => $this->upload->display_errors());
-                        $response = array(
-                            'status'	=> false,
-                            'msg'		=> 'Foto Gagal di Upload!',
-                            'eror'  => $error
-                        );
-                        echo json_encode($response);
-                        die;
+            $total_uploaded_images = count(array_filter($_FILES['legitimage']['name']));
+            if ($total_uploaded_images >= 6 && $total_uploaded_images <= 12) {
+                for ($i = 0; $i < $total_uploaded_images; $i++) {
+                    if (!empty($_FILES['legitimage']['name'][$i])) {
+            
+                        $_FILES['file']['name'] = $_FILES['legitimage']['name'][$i];
+                        $_FILES['file']['type'] = $_FILES['legitimage']['type'][$i];
+                        $_FILES['file']['tmp_name'] = $_FILES['legitimage']['tmp_name'][$i];
+                        $_FILES['file']['error'] = $_FILES['legitimage']['error'][$i];
+                        $_FILES['file']['size'] = $_FILES['legitimage']['size'][$i];
+            
+                        if ($this->upload->do_upload('file')) {
+            
+                            $uploadData = $this->upload->data();
+                            $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                            $data_foto[] = array(
+                                'nama_foto' => $imageUrl
+                            );
+                            unlink($uploadData['full_path']);
+                        } else {
+                            $error = array('error' => $this->upload->display_errors());
+                            $response = array(
+                                'status' => false,
+                                'msg' => 'Foto Gagal di Upload!',
+                                'eror'  => $error
+                            );
+                            echo json_encode($response);
+                            die;
+                        }
                     }
                 }
+            } else {
+                $response = array(
+                    'status' => false,
+                    'msg' => 'You can only upload between 6 to 12 images.'
+                );
+                echo json_encode($response);
+                die;
             }
+            
             // $data = array(
             //     'user_id'   => $user_id,
             //     'kategori'      => $kategori_id,
@@ -132,6 +144,7 @@ class Legits extends RestController {
                 'kondisi'       => $kondisi_barang,
                 'toko_pembelian' => $nama_toko,
                 'catatan'       => $catatan,
+                'purchase'       => $purchase,
                 'created_at'    => date('Y-m-d H:i:s')
             );
             $this->legit_detail->insert($data_legit_detail);
@@ -159,7 +172,7 @@ class Legits extends RestController {
                 ],400);
             }else{
                 $this->db->trans_commit();
-                // $this->admin_email_notif($case_id);
+                $this->admin_email_notif($case_id);
                 $this->response([
                     'status'    => true,
                     'case_id'   => $case_id,
@@ -201,17 +214,29 @@ class Legits extends RestController {
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
 
         $user_id = $decodedToken['data']->user_id;
-        $dataLegit = $this->legit->getLegitListUser($user_id);
-        // var_dump($dataLegit);
-        foreach ($dataLegit as $key) {
-            // if($key->check_result == 'preview'){
-            //     $key->check_result = 'Checking';
-            // }else
-            if($key->check_result == 'real'){
-                $key->check_result = 'Original';
-            }
-            if($key->check_result == null){
-                $key->check_result = 'Waiting';
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        $search = $this->input->get('search');
+        $status = $this->input->get('status');
+
+        $dataLegit = NULL;
+        if ($decodedToken['data']->role == 'admin') {
+            $dataLegit = $this->legit->getLegitListAll($limit, $page, $search, $status);
+        } else {
+            $dataLegit = $this->legit->getLegitListUser($user_id, $limit, $page, $search, $status);
+        }
+        if (!empty($dataLegit['data'])) {
+            foreach ($dataLegit['data'] as $key) {
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
+                if($key->check_result == 'real'){
+                    $key->check_result = 'Original';
+                }
+                if($key->check_result == null){
+                    $key->check_result = 'Waiting';
+                }
             }
         }
         $this->response([
@@ -234,12 +259,17 @@ class Legits extends RestController {
 
         $case_code = $this->get('case_code');
         $user_id = $decodedToken['data']->user_id;
-        $dataLegit = $this->legit->getLegitListUserDetail($user_id,$case_code);
-        if($dataLegit){
+        $dataLegit = NULL;
+        if ($decodedToken['data']->role == 'admin' || $decodedToken['data']->role == 'validator') {
+            $dataLegit = $this->legit->getLegitListUserDetail(NULL, $case_code);
+        } else {
+            $dataLegit = $this->legit->getLegitListUserDetail($user_id,$case_code);
+        }
+        if(!empty($dataLegit)){
             foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
                 if($key->check_result == 'real'){
                     $key->check_result = 'Original';
                 }
@@ -265,23 +295,23 @@ class Legits extends RestController {
         $this->authorization_token->authtoken();
         $headers = $this->input->request_headers();
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-        $tipe = $this->get('tipe');
-        // var_dump($decodedToken['data']->validator_kategori_id);
-        $nama_brand = '';
-        $get_brand_name = $this->brand->get_by(array('id' => $decodedToken['data']->validator_brand_id),null,null,true,array('id','brand_name'));
-        if(!empty($get_brand_name)){
-            $nama_brand = $get_brand_name->brand_name;
-        }
-        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,$nama_brand);
-        foreach ($dataLegit as $key) {
-            // if($key->check_result == 'preview'){
-            //     $key->check_result = 'Checking';
-            // }else
-            if($key->check_result == 'real'){
-                $key->check_result = 'Original';
-            }
-            if($key->check_result == null){
-                $key->check_result = 'Waiting';
+        $tipe = $this->get('type');
+        $search = $this->get('search');
+      
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        $dataLegit = $this->legit->getLegitListByStatus($decodedToken['data']->validator_brand_id,$tipe,NULL, $limit, $page, $search);
+        if (!empty($dataLegit['data'])) {
+            foreach ($dataLegit['data'] as $key) {
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
+                if($key->check_result == 'real'){
+                    $key->check_result = 'Original';
+                }
+                if($key->check_result == null){
+                    $key->check_result = 'Waiting';
+                }
             }
         }
         $this->response([
@@ -297,9 +327,9 @@ class Legits extends RestController {
         $dataLegit = $this->legit->getValidateDetail($case_code);
         if($dataLegit){
             foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
                 if($key->check_result == 'real'){
                     $key->check_result = 'Original';
                 }
@@ -395,11 +425,25 @@ class Legits extends RestController {
 
     public function summaryadmin_get(){
         $this->authorization_token->authtoken();
-        $data = array(
-            'total_user'  => $this->user->count(array('role' => 'user')),
-            'total_validator'=> $this->user->count(array('role' => 'validator')),
-            'total_legit_success'  => '...',
-        );
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        $data = NULL;
+        if ($decodedToken['data']->role == 'admin') {
+            $data = array(
+                'total_user'  => $this->user->count(array('role' => 'user')),
+                'total_validator'=> $this->user->count(array('role' => 'validator')),
+                'total_checked'  => $this->validator->count(NULL, array("check_result" => 'processing')),
+                'total_pending'  => $this->validator->count(array("check_result" => 'processing')),
+                'total_legit_check'  => $this->validator->count(),
+            );
+        } else if ($decodedToken['data']->role == 'validator') {
+            $data = array(
+                'total_checked'     => $this->validator->count(array("validator_user_id" => $decodedToken['data']->user_id, "check_result" => 'processing')),
+                'total_pending'     => $this->validator->count(array("check_result" => 'processing', "validator_user_id" => $decodedToken['data']->user_id)),
+                'total_legit_check' => $this->validator->count(array("validator_user_id" => $decodedToken['data']->user_id)),
+            );
+        }
         $this->response([
             'status' => true,
             'data'  => $data
@@ -426,9 +470,9 @@ class Legits extends RestController {
         $dataLegit = $this->legit->getLegitListPublish();
         if($dataLegit){
             foreach ($dataLegit as $key) {
-                // if($key->check_result == 'preview'){
-                //     $key->check_result = 'Checking';
-                // }else
+                if($key->check_result == 'processing'){
+                    $key->check_result = 'Canceled';
+                }
                 if($key->check_result == 'real'){
                     $key->check_result = 'Original';
                 }

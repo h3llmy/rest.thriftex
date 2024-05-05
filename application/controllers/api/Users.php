@@ -14,8 +14,117 @@ class Users extends RestController {
         $this->load->library('Authorization_Token');
         $this->load->helper(array('user_helper'));
         $this->load->model('User_model','user');
+        $this->load->model('Brand_model','brand');
         $this->load->model('Validator_model','validator');
+        $this->load->library('S3');
+        $this->load->library('Smtp');
     }
+    
+    public function list_get() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        $role = $this->input->get('role');
+        
+        $users = $this->user->list_pagination($limit, $page,$this->input->get('search'), $role);
+        return $this->response([
+            'data' => $users
+        ],200);
+    }
+
+    public function listvalidator_get() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        
+        $users = $this->user->list_pagination($limit, $page,$this->input->get('search'), 'validator');
+        return $this->response([
+            'data' => $users
+        ],200);
+    }
+    
+    public function validators_get() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin' && $decodedToken['data']->role !== 'validator') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $limit = (int)($this->input->get('limit') ?? 10);
+        $page = (int)($this->input->get('page') ?? 1);
+        
+        $users = $this->validator->list_pagination($limit, $page,$this->input->get('search'));
+        return $this->response([
+            'data' => $users
+        ],200);
+    }
+
+    public function updatevalidator_post() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $update_data = [];
+        if ($this->input->post('nama')) {
+            $update_data['nama'] = $this->input->post('nama');
+        }
+        if ($this->input->post('email')) {
+            $update_data['email'] = $this->input->post('email');
+        }
+        if ($this->input->post('validator_brand_id')) {
+            var_dump($this->input->post('validator_brand_id'));
+            $update_data['validator_brand_id'] = $this->input->post('validator_brand_id');
+        }
+    
+        // Perform the update
+        $this->user->update($update_data, ['id' => $this->input->post('validator_id')]);
+
+        return $this->response([
+            'message' => 'success'
+        ], 200);
+    }
+
+    public function blockuser_post() {
+        $this->authorization_token->authtoken();
+        $headers = $this->input->request_headers();
+        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+        if ($decodedToken['data']->role !== 'admin') {
+            return $this->response([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $this->user->block_user($this->input->post('user_id'),$this->input->post('is_active'));
+
+        return $this->response([
+            'message' => 'success'
+        ], 200);
+    }
+    
     public function register_post()
 	{   
         try {
@@ -48,6 +157,8 @@ class Users extends RestController {
                 $data['role'] = $this->input->post('role');
                 $data['validator_brand_id'] = $this->input->post('validator_brand_id');
                 // $data['validator_kategori_id'] = $this->input->post('validator_kategori_id');
+            } else if ($this->input->post('role') == 'admin') {
+                $data['validator_brand_id'] = '999';
             }
             $data['user_code'] = intCodeRandom(4);
 
@@ -88,6 +199,7 @@ class Users extends RestController {
                     'username' => $cek_email->username,
                     'email'  => $cek_email->email,
                     'role'  => $cek_email->role,
+                    'foto'  => $cek_email->foto,
                     'validator_brand_id'    => $cek_email->validator_brand_id,
                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
                     'user_code' => $cek_email->user_code,
@@ -170,7 +282,13 @@ class Users extends RestController {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
         if(isset($email)){
-            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin'));
+            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto', 'is_active'));
+            if ($cek_email->is_active == FALSE) {
+                $this->response([
+                    'status' => false,
+                    'message'   => 'akun tidak aktif!',
+                ],400);
+            }
             if($cek_email != null){
                 $this->user_detail = $cek_email;
             }else{
@@ -200,18 +318,23 @@ class Users extends RestController {
                 'username' => $this->user_detail->username,
                 'email'  => $this->user_detail->email,
                 'role'  => $this->user_detail->role,
+                'foto'  => $this->user_detail->foto,
                 'no_hp'  => $this->user_detail->no_hp,
                 'jenis_kelamin'  => $this->user_detail->jenis_kelamin,
                 'validator_brand_id'    => $this->user_detail->validator_brand_id,
                 'validator_kategori_id'    => $this->user_detail->validator_kategori_id,
                 'user_code' => $this->user_detail->user_code
             );
+
             $token = $this->authorization_token->generateToken($token_data);
+            $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+
             $this->response([
                 'status' => true,
                 'uid'   => $this->user_detail->id,
                 'message'   => 'Login Berhasil!',
-                'token'  => $token
+                'access_token'  => $token,
+                'refresh_token' => $token_refresh
             ],200);
             
         } catch (\Throwable $th) {
@@ -220,6 +343,34 @@ class Users extends RestController {
                 'message'   => $th->getMessage(),
             ],400);
         }
+    }
+
+    public function refresh_token_post() {
+        $refresh_token = $this->input->post('refresh_token');
+
+        $decodedToken = $this->authorization_token->validateTokenRefresh($refresh_token);
+
+        $token_data = array(
+            'user_id'   => $decodedToken['data']->user_id,
+            'nama'  => $decodedToken['data']->nama,
+            'username' => $decodedToken['data']->username,
+            'email'  => $decodedToken['data']->email,
+            'role'  => $decodedToken['data']->role,
+            'foto'  => $decodedToken['data']->foto,
+            'no_hp'  => $decodedToken['data']->no_hp,
+            'jenis_kelamin'  => $decodedToken['data']->jenis_kelamin,
+            'validator_brand_id'    => $decodedToken['data']->validator_brand_id,
+            'validator_kategori_id'    => $decodedToken['data']->validator_kategori_id,
+            'user_code' => $decodedToken['data']->user_code
+        );
+
+        $token = $this->authorization_token->generateToken($token_data);
+        $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+
+        return $this->response([
+            'access_token'  => $token,
+            'refresh_token' => $token_refresh
+        ], 200);
     }
 
     public function password_check($str){
@@ -233,9 +384,54 @@ class Users extends RestController {
 			}
 		}else{
 			$this->form_validation->set_message('password_check','Password salah!');
+        var_dump($user_detail);
+
 			return FALSE;
 		}
 	}
+
+    public function forgetpassword_post() {
+        try {
+            $this->form_validation->set_rules('email', 'Email', 'required');
+    
+            $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
+            $this->form_validation->set_error_delimiters('', '');
+            if(!$this->form_validation->run()) throw new Exception(validation_errors());
+
+            $user = $this->user->get_by_email($this->input->post('email'));
+            if (empty($user)) {
+                return $this->response([
+                    'status' => false,
+                    'message' => 'user tidak ditemukan'
+                ], 404);
+            }
+            $token_data = [
+                'id' => $user->id,
+                'email' => $user->email,
+                'type' => 'forget password'
+            ];
+            $token = $this->authorization_token->generateToken($token_data);
+            $email_payload = [
+                'user' => $user,
+                'token' => $token
+            ];
+            $html = $this->load->view('email/forget_password_email.php',$email_payload,true);
+
+            $subjek = 'Reset Password';
+            $send = $this->smtp->SendEmail($user->email,$subjek,$html);
+            
+            $this->response([
+                'message' => 'success'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            $this->response([
+                'status' => false,
+                'message'   => $th->getMessage(),
+                'error_data'    => $this->form_validation->error_array()
+            ],400);
+        }
+    }
 
     public function validatetoken_post(){
         $headers = $this->input->request_headers();
@@ -348,11 +544,133 @@ class Users extends RestController {
         }
     }
 
+    public function updateuserprofile_post() {
+        $config['upload_path'] = './media/';
+        $config['allowed_types'] = 'jpg|jpeg|png|webp|image/jpeg|PNG|JPEG|JPG';
+        $config['overwrite'] = FALSE;
+        $config['max_size'] = '10000';
+        $config['encrypt_name'] = TRUE;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        try {
+            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('nama', 'Nama', 'required');
+            $this->form_validation->set_rules('no_hp', 'Phone Number', 'required');
+            $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
+            
+            if (!empty($this->input->post('old_password'))) {
+                $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
+                $this->form_validation->set_rules('password', 'Password', 'required');
+                $this->form_validation->set_rules('passconf', 'Konfirmasi Password', 'required|matches[password]');
+            }
+    
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email', array('matches' => 'Password Konfirmasi harus sama!'));
+            $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
+            
+            $this->authorization_token->authtoken();
+            $headers = $this->input->request_headers();
+            $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
+            
+            $this->user_detail = $this->user->get($decodedToken['data']->user_id, true);
+            
+            // Run form validation
+            if (!$this->form_validation->run()) {
+                throw new Exception(validation_errors());
+            }
+    
+            $data_foto = array();
+            // Check if a file is uploaded
+            if (!empty($_FILES['foto']['name'])) {
+                if ($this->upload->do_upload('foto')) {
+                    $uploadData = $this->upload->data();
+                    $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                    $data_foto[] = array(
+                        'nama_foto' => $imageUrl
+                    );
+                    unlink($uploadData['full_path']);
+                } else {
+                    $error = array('error' => $this->upload->display_errors());
+                    $response = array(
+                        'status' => false,
+                        'msg' => 'Foto Gagal di Upload!',
+                        'error' => $error
+                    );
+                    echo json_encode($response);
+                    die;
+                }
+            }
+
+            $user_updated_data = [
+                "username" => $this->input->post('username'),
+                "nama" => $this->input->post('nama'),
+                "no_hp" => $this->input->post('no_hp'),
+                "jenis_kelamin" => $this->input->post('jenis_kelamin'),
+                "email" => $this->input->post('email'),  
+                'foto' => !empty($data_foto) ? $data_foto[0]['nama_foto'] : $this->user_detail->foto
+            ];
+
+            if (!empty($this->input->post('password'))) {
+                $user_updated_data['password'] = bCrypt($this->input->post('password'), 12);
+            }
+    
+            // Update user profile
+            $user = $this->user->update($user_updated_data, ['id' => $decodedToken['data']->user_id]);
+    
+            $user_detail = $this->user->get($decodedToken['data']->user_id, TRUE);
+    
+            $token_data = array(
+                'user_id' => $user_detail->id,
+                'nama' => $user_detail->nama,
+                'username' => $user_detail->username,
+                'email' => $user_detail->email,
+                'role' => $user_detail->role,
+                'no_hp' => $user_detail->no_hp,
+                'foto' => $user_detail->foto,
+                'jenis_kelamin' => $user_detail->jenis_kelamin,
+                'validator_brand_id' => $user_detail->validator_brand_id,
+                'validator_kategori_id' => $user_detail->validator_kategori_id,
+                'user_code' => $user_detail->user_code
+            );
+    
+            $token = $this->authorization_token->generateToken($token_data);
+            $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+    
+            if ($user === TRUE) {
+                // Return response
+                $this->response([
+                    "message" => "user updated",
+                    "access_token" => $token,
+                    "refresh_token" => $token_refresh,
+                ]);
+            } else {
+                $this->response([
+                    "message" => 'fail to update user'
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            // Handle exceptions
+            $this->response([
+                'status' => false,
+                'message' => $th->getMessage(),
+                'error_data' => [
+                    'nama' => form_error('nama'),
+                    'username' => form_error('username'),
+                    'no_hp' => form_error('no_hp'),
+                    'jenis_kelamin' => form_error('jenis_kelamin'),
+                    'old_password' => form_error('old_password'),
+                    'password' => form_error('password'),
+                    'passconf' => form_error('passconf'),
+                    'email' => form_error('email'),
+                ]
+            ], 400);
+        }
+    }
+    
+
     public function checkusername_post(){
         $this->authorization_token->authtoken();
         $headers = $this->input->request_headers();
         $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-        // var_dump();
         $data = $this->input->post();
         $cek_username = $this->user->get_by(array('username' => $data['username']),null,null,true,array('username'));
         if(!empty($cek_username)){
@@ -443,6 +761,14 @@ class Users extends RestController {
     public function updatepassword_post() {
         try {
             $decodedToken = $this->authorization_token->validateToken();
+
+            // var_dump($decodedToken); die;
+
+            if ($decodedToken['data']->type != 'forget password') {
+                return $this->response([
+                    'message' => 'invalid token'
+                ], 401);
+            }
            
             $this->form_validation->set_rules('password', 'Password', 'required');
             $this->form_validation->set_message('required', '{field} tidak boleh kosong!');
@@ -458,13 +784,33 @@ class Users extends RestController {
                 'password' => bCrypt($data['password'], 12)
             );
     
-            $update = $this->user->update($update_data, array('id' => $decodedToken['data']->user_id));
+            $update = $this->user->update($update_data, array('id' => $decodedToken['data']->id));
     
             if ($update) {
+                $cek_email = $this->user->get_by(array('id' => $decodedToken['data']->id),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto', 'is_active'));
+                $token_data = array(
+                    'user_id'   => $cek_email->id,
+                    'nama'  => $cek_email->nama,
+                    'username' => $cek_email->username,
+                    'email'  => $cek_email->email,
+                    'role'  => $cek_email->role,
+                    'foto'  => $cek_email->foto,
+                    'no_hp'  => $cek_email->no_hp,
+                    'jenis_kelamin'  => $cek_email->jenis_kelamin,
+                    'validator_brand_id'    => $cek_email->validator_brand_id,
+                    'validator_kategori_id'    => $cek_email->validator_kategori_id,
+                    'user_code' => $cek_email->user_code
+                );
+    
+                $token = $this->authorization_token->generateToken($token_data);
+                $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+    
                 $this->response([
                     'status' => true,
-                    'message'   => $decodedToken['data'],
-                    'data'  => []
+                    'uid'   => $cek_email->id,
+                    'message'   => 'Login Berhasil!',
+                    'access_token'  => $token,
+                    'refresh_token' => $token_refresh
                 ],200);
             } else {
                 $this->response([

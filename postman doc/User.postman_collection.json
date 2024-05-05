@@ -238,6 +238,449 @@
 			]
 		},
 		{
+			"name": "refresh token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsIm5vX2hwIjpudWxsLCJqZW5pc19rZWxhbWluIjpudWxsLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOiIwIiwidmFsaWRhdG9yX2thdGVnb3JpX2lkIjoiMCIsInVzZXJfY29kZSI6IjE5NDQiLCJBUElfVElNRSI6MTcwODc4NTc0Mn0.gJzq7UfkAG0m5a_uPJGqwyB03TjjTGXdq_WiAx3JIt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "refresh_token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0NyIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6Im1pbWkiLCJlbWFpbCI6ImtlbGFzZHVhZGVAZ21haWwuY29tIiwicm9sZSI6ImFkbWluIiwibm9faHAiOiI5ODEyMDkzODEwOTI4MyIsImplbmlzX2tlbGFtaW4iOiJsYWtpLWxha2kiLCJ2YWxpZGF0b3JfYnJhbmRfaWQiOm51bGwsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiI2MTQ4IiwiQVBJX1RJTUUiOjM0MjczMzQzMjZ9.qXpobURbfJeACObq3fESknpN3zLjWHcRu8ROU7wwwb4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/refresh_token",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"refresh_token"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:36:00 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ci_session=3e6ebi6nkl7ls9bp116o31nhn26io9c8; expires=Tue, 05-Mar-2024 14:36:00 GMT; Max-Age=7200; path=/; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "456"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"uid\": \"1441\",\n    \"message\": \"Login Berhasil!\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJub19ocCI6bnVsbCwiamVuaXNfa2VsYW1pbiI6bnVsbCwidmFsaWRhdG9yX2JyYW5kX2lkIjoiMCIsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiIxOTQ0IiwiQVBJX1RJTUUiOjE3MDk2NDIxNjF9.fc0sxpxENWvNSfoNc3pxI76aM-Yee6SApVRniFwmJOU\"\n}"
+				},
+				{
+					"name": "Validation Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.coms",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:45:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Email tidak terdaftar!\"\n}"
+				}
+			]
+		},
+		{
+			"name": "block user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "1447",
+							"type": "text"
+						},
+						{
+							"key": "is_active",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/blockuser",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"blockuser"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:36:00 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ci_session=3e6ebi6nkl7ls9bp116o31nhn26io9c8; expires=Tue, 05-Mar-2024 14:36:00 GMT; Max-Age=7200; path=/; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "456"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"uid\": \"1441\",\n    \"message\": \"Login Berhasil!\",\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTQ0MSIsIm5hbWEiOiJoYXJ1bWkiLCJ1c2VybmFtZSI6ImhhcnVtaTE4OSIsImVtYWlsIjoia2VsYXNkdWFkZUBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJub19ocCI6bnVsbCwiamVuaXNfa2VsYW1pbiI6bnVsbCwidmFsaWRhdG9yX2JyYW5kX2lkIjoiMCIsInZhbGlkYXRvcl9rYXRlZ29yaV9pZCI6IjAiLCJ1c2VyX2NvZGUiOiIxOTQ0IiwiQVBJX1RJTUUiOjE3MDk2NDIxNjF9.fc0sxpxENWvNSfoNc3pxI76aM-Yee6SApVRniFwmJOU\"\n}"
+				},
+				{
+					"name": "Validation Error",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.coms",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/rest.thriftex.id/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"rest.thriftex.id",
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:45:03 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Email tidak terdaftar!\"\n}"
+				}
+			]
+		},
+		{
 			"name": "data sumarry",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -350,6 +793,121 @@
 			]
 		},
 		{
+			"name": "Forget Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/forgetpassword",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"forgetpassword"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/forgetpassword",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"forgetpassword"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Wed, 01 May 2024 15:12:26 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "21"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"success\"\n}"
+				}
+			]
+		},
+		{
 			"name": "update password",
 			"request": {
 				"auth": {
@@ -359,7 +917,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{access_token}}",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjE0NDciLCJlbWFpbCI6ImtlbGFzZHVhZGVAZ21haWwuY29tIiwidHlwZSI6ImZvcmdldCBwYXNzd29yZCIsIkFQSV9USU1FIjoxNzE0NTc1ODgyfQ.cIaTOGUE-4ipangxgDg1LPoQ2ciFUX_gwE5lidQde-U",
 						"type": "text"
 					}
 				],
@@ -373,7 +931,7 @@
 						},
 						{
 							"key": "passconf",
-							"value": "12345678s",
+							"value": "12345678",
 							"type": "text"
 						}
 					]
@@ -854,12 +1412,12 @@
 					"formdata": [
 						{
 							"key": "nama",
-							"value": "harumi",
+							"value": "validator",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "kelasduade@gmail.com",
+							"value": "validators@gmail.com",
 							"type": "text"
 						},
 						{
@@ -880,7 +1438,7 @@
 						},
 						{
 							"key": "validator_brand_id",
-							"value": "999",
+							"value": "21",
 							"description": "optional",
 							"type": "text"
 						}
@@ -1067,7 +1625,7 @@
 			]
 		},
 		{
-			"name": "Validate Token",
+			"name": "update validator",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -1082,25 +1640,227 @@
 					"formdata": [
 						{
 							"key": "nama",
-							"value": "harumi",
+							"value": "validator",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "kelasduade@gmail.com",
+							"value": "validator@gmail.com",
 							"type": "text"
 						},
 						{
-							"key": "password",
-							"value": "123123123",
+							"key": "role",
+							"value": "admin",
+							"description": "optional",
 							"type": "text"
 						},
 						{
-							"key": "passconf",
-							"value": "123123123",
+							"key": "validator_brand_id",
+							"value": "5",
+							"description": "optional",
+							"type": "text"
+						},
+						{
+							"key": "validator_id",
+							"value": "1450",
 							"type": "text"
 						}
 					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/updatevalidator",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"updatevalidator"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Error Validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/register",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:57:47 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "331"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": false,\n    \"message\": \"Nama tidak boleh kosong!\\nEmail tidak boleh kosong!\\nPassword tidak boleh kosong!\\nKonfirmsi Password tidak boleh kosong!\\n\",\n    \"error_data\": {\n        \"nama\": \"Nama tidak boleh kosong!\",\n        \"email\": \"Email tidak boleh kosong!\",\n        \"password\": \"Password tidak boleh kosong!\",\n        \"passconf\": \"Konfirmsi Password tidak boleh kosong!\"\n    }\n}"
+				},
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/register",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 05 Mar 2024 12:58:17 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "55"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Register Berhasil\",\n    \"data\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Validate Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
 				},
 				"url": {
 					"raw": "{{base_api}}/users/validatetoken",
@@ -1485,6 +2245,635 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"sEcho\": 1,\n    \"iTotalRecords\": 0,\n    \"iTotalDisplayRecords\": \"0\",\n    \"aaData\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "update profile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nama",
+							"value": "harumi",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "mimi",
+							"type": "text"
+						},
+						{
+							"key": "no_hp",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "jenis_kelamin",
+							"value": "laki-laki",
+							"type": "text"
+						},
+						{
+							"key": "old_password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "passconf",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kelasduade@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_api}}/users/updateuserprofile",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"updateuserprofile"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nama",
+									"value": "harumi",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "mimi",
+									"type": "text"
+								},
+								{
+									"key": "no_hp",
+									"value": "98120938109283",
+									"type": "text"
+								},
+								{
+									"key": "jenis_kelamin",
+									"value": "laki-laki",
+									"type": "text"
+								},
+								{
+									"key": "old_password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "passconf",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kelasduade@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/C:/Users/helmy/OneDrive/Pictures/175624178_220821463172257_3258760423533832396_n.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_api}}/users/updateuserprofile",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"updateuserprofile"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 20 Apr 2024 12:52:46 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ci_session=preaasirfng16o01lotqktfosmplopbt; expires=Sat, 20-Apr-2024 14:52:46 GMT; Max-Age=7200; path=/; HttpOnly; SameSite=Lax"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "26"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"user updated\"\n}"
+				}
+			]
+		},
+		{
+			"name": "list pagination",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_api}}/users/list?page=1&limit=10",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "search",
+							"value": "Inno Targaryen",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_api}}/users/list?page=1&search=Inno Targaryen",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"list"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Inno Targaryen"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 20 Apr 2024 13:40:22 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "735"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=99"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"total_pages\": 1,\n        \"total_data\": 2,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"67\",\n                \"nama\": \"Inno Targaryen\",\n                \"username\": \"innoaargt113\",\n                \"email\": \"austingraves391@gmail.com\",\n                \"foto\": \"\",\n                \"role\": \"user\",\n                \"register_tipe\": \"manual\",\n                \"validator_brand_id\": \"0\",\n                \"validator_kategori_id\": \"0\",\n                \"user_code\": \"2972\",\n                \"gid\": null,\n                \"no_hp\": null,\n                \"jenis_kelamin\": null,\n                \"created_at\": \"2023-04-06 11:21:20\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"69\",\n                \"nama\": \"Inno Targaryen\",\n                \"username\": \"innoaratg70\",\n                \"email\": \"austingautama391@gmail.com\",\n                \"foto\": \"\",\n                \"role\": \"user\",\n                \"register_tipe\": \"manual\",\n                \"validator_brand_id\": \"0\",\n                \"validator_kategori_id\": \"0\",\n                \"user_code\": \"8088\",\n                \"gid\": null,\n                \"no_hp\": null,\n                \"jenis_kelamin\": null,\n                \"created_at\": \"2023-04-06 11:23:51\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "list validator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_api}}/users/validators?page=1",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"validators"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "Converse",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_api}}/users/validators?page=1&search=Converse",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"validators"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Converse"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 21 Apr 2024 03:31:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2410"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"total_pages\": 242,\n        \"total_data\": 2411,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"1\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"ads\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:01:21\",\n                \"updated_at\": \"2023-04-03 18:01:12\"\n            },\n            {\n                \"id\": \"2\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asda\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:18:38\",\n                \"updated_at\": \"2023-04-03 18:18:28\"\n            },\n            {\n                \"id\": \"3\",\n                \"legit_id\": \"50\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 03:38:30\",\n                \"created_at\": \"2023-04-04 09:38:47\",\n                \"updated_at\": \"2023-04-04 03:38:30\"\n            },\n            {\n                \"id\": \"6\",\n                \"legit_id\": \"52\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"halo ini catatan\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:18:22\",\n                \"created_at\": \"2023-04-04 16:18:22\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"7\",\n                \"legit_id\": \"49\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"fake ini bos, label rusak\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:27:36\",\n                \"created_at\": \"2023-04-04 16:27:36\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"8\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:38:51\",\n                \"created_at\": \"2023-04-04 16:38:51\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"9\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:41:57\",\n                \"created_at\": \"2023-04-04 16:41:57\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"10\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:42:10\",\n                \"created_at\": \"2023-04-04 16:42:10\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"11\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:00\",\n                \"created_at\": \"2023-04-04 16:44:00\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"12\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:09\",\n                \"created_at\": \"2023-04-04 16:44:09\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "list user validator",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_api}}/users/list?page=1&role=validator",
+					"host": [
+						"{{base_api}}"
+					],
+					"path": [
+						"users",
+						"list"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "search",
+							"value": "Converse",
+							"disabled": true
+						},
+						{
+							"key": "role",
+							"value": "validator"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_api}}/users/validators?page=1&search=Converse",
+							"host": [
+								"{{base_api}}"
+							],
+							"path": [
+								"users",
+								"validators"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "Converse"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sun, 21 Apr 2024 03:31:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.1.25"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.25"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, authorization"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "2410"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"total_pages\": 242,\n        \"total_data\": 2411,\n        \"current_page\": 1,\n        \"data\": [\n            {\n                \"id\": \"1\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"ads\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:01:21\",\n                \"updated_at\": \"2023-04-03 18:01:12\"\n            },\n            {\n                \"id\": \"2\",\n                \"legit_id\": \"51\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asda\",\n                \"validator_user_id\": \"54\",\n                \"final_time_check\": \"0000-00-00 00:00:00\",\n                \"created_at\": \"2023-04-04 00:18:38\",\n                \"updated_at\": \"2023-04-03 18:18:28\"\n            },\n            {\n                \"id\": \"3\",\n                \"legit_id\": \"50\",\n                \"check_result\": \"\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 03:38:30\",\n                \"created_at\": \"2023-04-04 09:38:47\",\n                \"updated_at\": \"2023-04-04 03:38:30\"\n            },\n            {\n                \"id\": \"6\",\n                \"legit_id\": \"52\",\n                \"check_result\": \"real\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"halo ini catatan\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:18:22\",\n                \"created_at\": \"2023-04-04 16:18:22\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"7\",\n                \"legit_id\": \"49\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"fake ini bos, label rusak\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:27:36\",\n                \"created_at\": \"2023-04-04 16:27:36\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"8\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:38:51\",\n                \"created_at\": \"2023-04-04 16:38:51\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"9\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:41:57\",\n                \"created_at\": \"2023-04-04 16:41:57\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"10\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:42:10\",\n                \"created_at\": \"2023-04-04 16:42:10\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"11\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:00\",\n                \"created_at\": \"2023-04-04 16:44:00\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            },\n            {\n                \"id\": \"12\",\n                \"legit_id\": \"48\",\n                \"check_result\": \"fake\",\n                \"processing_status\": \"none\",\n                \"check_note\": \"asd\",\n                \"validator_user_id\": \"58\",\n                \"final_time_check\": \"2023-04-04 10:44:09\",\n                \"created_at\": \"2023-04-04 16:44:09\",\n                \"updated_at\": \"0000-00-00 00:00:00\"\n            }\n        ]\n    }\n}"
 				}
 			]
 		}
