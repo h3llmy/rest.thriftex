@@ -72,43 +72,30 @@ class Legits extends RestController {
 
             $data_foto = array();
             $total_uploaded_images = count(array_filter($_FILES['legitimage']['name']));
-            if ($total_uploaded_images >= 6 && $total_uploaded_images <= 12) {
-                for ($i = 0; $i < $total_uploaded_images; $i++) {
-                    if (!empty($_FILES['legitimage']['name'][$i])) {
             
-                        $_FILES['file']['name'] = $_FILES['legitimage']['name'][$i];
-                        $_FILES['file']['type'] = $_FILES['legitimage']['type'][$i];
-                        $_FILES['file']['tmp_name'] = $_FILES['legitimage']['tmp_name'][$i];
-                        $_FILES['file']['error'] = $_FILES['legitimage']['error'][$i];
-                        $_FILES['file']['size'] = $_FILES['legitimage']['size'][$i];
+            if ($total_uploaded_images < 6 || $total_uploaded_images > 12) {
+                throw new Exception('You can only upload between 6 to 12 images.');
+            }
             
-                        if ($this->upload->do_upload('file')) {
-            
-                            $uploadData = $this->upload->data();
-                            $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
-                            $data_foto[] = array(
-                                'nama_foto' => $imageUrl
-                            );
-                            unlink($uploadData['full_path']);
-                        } else {
-                            $error = array('error' => $this->upload->display_errors());
-                            $response = array(
-                                'status' => false,
-                                'msg' => 'Foto Gagal di Upload!',
-                                'eror'  => $error
-                            );
-                            echo json_encode($response);
-                            die;
-                        }
+            foreach ($_FILES['legitimage']['name'] as $key => $value) {
+                if (!empty($value)) {
+                    $_FILES['file'] = array(
+                        'name' => $_FILES['legitimage']['name'][$key],
+                        'type' => $_FILES['legitimage']['type'][$key],
+                        'tmp_name' => $_FILES['legitimage']['tmp_name'][$key],
+                        'error' => $_FILES['legitimage']['error'][$key],
+                        'size' => $_FILES['legitimage']['size'][$key]
+                    );
+    
+                    if ($this->upload->do_upload('file')) {
+                        $uploadData = $this->upload->data();
+                        $imageUrl = $this->s3->singleUpload($uploadData['full_path']);
+                        $data_foto[] = array('nama_foto' => $imageUrl);
+                        unlink($uploadData['full_path']);
+                    } else {
+                        throw new Exception($this->upload->display_errors());
                     }
                 }
-            } else {
-                $response = array(
-                    'status' => false,
-                    'msg' => 'You can only upload between 6 to 12 images.'
-                );
-                echo json_encode($response);
-                die;
             }
             
             // $data = array(
