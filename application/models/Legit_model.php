@@ -17,8 +17,8 @@ class Legit_model extends MY_Model
 		$this->db->join('tbl_legit_check_detail','tbl_legit_check_detail.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_gambar_legit','tbl_gambar_legit.legit_id = tbl_legit_check.id','join');
 		$this->db->join('tbl_validator','tbl_validator.legit_id = tbl_legit_check.id','left');
-		$this->db->join('tbl_user','tbl_validator.validator_user_id = tbl_user.id','join');
-		$this->db->join('tbl_brand','tbl_user.validator_brand_id = tbl_brand.id','join');
+		$this->db->join('tbl_user','tbl_legit_check.user_id = tbl_user.id','join');
+		$this->db->join('tbl_brand','tbl_legit_check_detail.brand_id = tbl_brand.id','join');
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
 		$this->db->group_by('tbl_gambar_legit.legit_id');
 		$this->db->group_by('tbl_validator.legit_id');
