@@ -153,7 +153,7 @@ class Brand extends RestController{
             $this->brand->update([
                 'brand_name' => $this->input->post('brand_name'),
                 'foto' => $data_foto[0]['nama_foto'],
-            ], ['id' => $this->input->post('id')]);
+            ], ['id' => $this->input->get('id')]);
     
             $this->response([
                 'message' => 'Brand berhasil diupdate',

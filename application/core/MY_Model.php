@@ -106,6 +106,7 @@ class MY_Model extends CI_Model{
 			}
 		}
 		$this->db->from($this->_table_name);
+		
 		return $this->db->count_all_results();
 	}
 	
