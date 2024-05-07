@@ -27,6 +27,15 @@ class Legit_model extends MY_Model
 		if (!empty($status)) {
 			$this->db->where('tbl_validator.check_result', $status);
 		}
+		if (!empty($search)) {
+			$this->db->group_start();
+			$this->db->like('tbl_legit_check.case_code', $search);
+			$this->db->or_like('tbl_legit_check_detail.nama_item', $search);
+			$this->db->or_like('tbl_legit_check_detail.nama_brand', $search);
+			$this->db->or_like('tbl_validator.check_result', $search);
+			$this->db->group_end();
+		}
+		
 		// Count the total filtered data
 		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
 
@@ -153,8 +162,8 @@ class Legit_model extends MY_Model
 			}
 		}
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
-		// $this->db->group_by('tbl_gambar_legit.legit_id');
-		// $this->db->group_by('tbl_validator.legit_id');
+		$this->db->group_by('tbl_gambar_legit.legit_id');
+		$this->db->group_by('tbl_validator.legit_id');
 
 		// Count the total filtered data
 		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
