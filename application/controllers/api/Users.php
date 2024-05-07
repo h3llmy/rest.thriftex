@@ -96,6 +96,7 @@ class Users extends RestController {
             $update_data['email'] = $this->input->post('email');
         }
         if ($this->input->post('validator_brand_id')) {
+            var_dump($this->input->post('validator_brand_id'));
             $update_data['validator_brand_id'] = $this->input->post('validator_brand_id');
         }
     
