@@ -162,8 +162,8 @@ class Legit_model extends MY_Model
 			}
 		}
 		$this->db->order_by('tbl_legit_check.submit_time','desc');
-		// $this->db->group_by('tbl_gambar_legit.legit_id');
-		// $this->db->group_by('tbl_validator.legit_id');
+		$this->db->group_by('tbl_gambar_legit.legit_id');
+		$this->db->group_by('tbl_validator.legit_id');
 
 		// Count the total filtered data
 		$total_data_count = $this->db->count_all_results($this->_table_name, FALSE);
