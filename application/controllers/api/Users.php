@@ -787,30 +787,9 @@ class Users extends RestController {
             $update = $this->user->update($update_data, array('id' => $decodedToken['data']->id));
     
             if ($update) {
-                $cek_email = $this->user->get_by(array('id' => $decodedToken['data']->id),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto', 'is_active'));
-                $token_data = array(
-                    'user_id'   => $cek_email->id,
-                    'nama'  => $cek_email->nama,
-                    'username' => $cek_email->username,
-                    'email'  => $cek_email->email,
-                    'role'  => $cek_email->role,
-                    'foto'  => $cek_email->foto,
-                    'no_hp'  => $cek_email->no_hp,
-                    'jenis_kelamin'  => $cek_email->jenis_kelamin,
-                    'validator_brand_id'    => $cek_email->validator_brand_id,
-                    'validator_kategori_id'    => $cek_email->validator_kategori_id,
-                    'user_code' => $cek_email->user_code
-                );
-    
-                $token = $this->authorization_token->generateToken($token_data);
-                $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
-    
                 $this->response([
                     'status' => true,
-                    'uid'   => $cek_email->id,
-                    'message'   => 'Login Berhasil!',
-                    'access_token'  => $token,
-                    'refresh_token' => $token_refresh
+                    'message'   => 'Update Password Berhasil!',
                 ],200);
             } else {
                 $this->response([
