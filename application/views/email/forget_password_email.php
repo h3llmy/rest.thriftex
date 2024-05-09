@@ -34,7 +34,7 @@ $config = new SConfig();
                     </tr>
                     <tr>
     <td align="center" style="margin-top: 20px;">
-        <a href="<?= $config->_frontend_url ?>/create-password/<?= $token ?>"
+        <a href="<?= $config->_frontend_url ?>/auth/create-password/<?= $token ?>"
            style="display: block; width: 100%; padding: 15px 0; background-color: black; border-radius: 4px; text-align: center; color: white; text-decoration: none; font-size: 16px;">
             Reset Password
         </a>
