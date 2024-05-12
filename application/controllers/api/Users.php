@@ -245,6 +245,12 @@ class Users extends RestController {
                     'message' => 'gagal login'
                 ], 400);
             }
+            if ($cek_email->gid != $payload_array['sub']) {
+                return $this->response([
+                    'status' => false,
+                    'message' => 'gagal login'
+                ], 400);
+            }
             $token_data = array(
                 'user_id'   => $cek_email->id,
                 'nama'  => $cek_email->nama,
