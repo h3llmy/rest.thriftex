@@ -21,7 +21,7 @@ class SConfig
 
     var $_app_mode = 'development';
     var $_host_name = 'localhost';
-    var $_database_name = 'thriftex2';
+    var $_database_name = 'thriftex';
 	var $_database_user = 'root';
 	var $_database_password = '';
 
