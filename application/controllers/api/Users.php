@@ -270,7 +270,7 @@ class Users extends RestController {
                 'status' => true,
                 'uid'   => $cek_email->id,
                 'message'   => 'Login Berhasil!',
-                'token'  => $token,
+                'access_token'  => $token,
                 'refresh_token' => $token_refresh
             ],200);
         }
