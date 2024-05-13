@@ -199,7 +199,7 @@ class Users extends RestController {
             ], 400);
         }
 
-        $cek_email = $this->user->get_by(array('email' => $payload_array['email']),1,NULL,TRUE,array('id','nama','foto','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'register_tipe'));
+        $cek_email = $this->user->get_by(array('email' => $payload_array['email']),1,NULL,TRUE,array('id','nama','foto','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'register_tipe', 'gid'));
         
         if (empty($cek_email)) {
             // register new user
