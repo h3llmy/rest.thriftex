@@ -96,7 +96,6 @@ class Users extends RestController {
             $update_data['email'] = $this->input->post('email');
         }
         if ($this->input->post('validator_brand_id')) {
-            var_dump($this->input->post('validator_brand_id'));
             $update_data['validator_brand_id'] = $this->input->post('validator_brand_id');
         }
     
@@ -223,6 +222,7 @@ class Users extends RestController {
                     'username' => $cek_email->username,
                     'email'  => $cek_email->email,
                     'role'  => $cek_email->role,
+                    'jenis_kelamin'  => $cek_email->jenis_kelamin,
                     'validator_brand_id'    => $cek_email->validator_brand_id,
                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
                     'user_code' => $cek_email->user_code
@@ -233,7 +233,7 @@ class Users extends RestController {
                     'status' => true,
                     'uid'   => $cek_email->id,
                     'message'   => 'Login Berhasil!',
-                    'token'  => $token,
+                    'access_token'  => $token,
                     'refresh_token' => $token_refresh
                 ],200);
             }
@@ -261,8 +261,8 @@ class Users extends RestController {
                 'validator_brand_id'    => $cek_email->validator_brand_id,
                 'validator_kategori_id'    => $cek_email->validator_kategori_id,
                 'user_code' => $cek_email->user_code,
-                'no_hp'  => (!empty($this->cek_email->no_hp))?$this->cek_email->no_hp:'-',
-                'jenis_kelamin'  => (!empty($this->cek_email->jenis_kelamin))?$this->cek_email->jenis_kelamin:'-',
+                'no_hp'  => (!empty($cek_email->no_hp))?$cek_email->no_hp:'-',
+                'jenis_kelamin'  => (!empty($cek_email->jenis_kelamin))?$cek_email->jenis_kelamin:'-',
             );
             $token = $this->authorization_token->generateToken($token_data);
             $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
@@ -477,7 +477,6 @@ class Users extends RestController {
 			}
 		}else{
 			$this->form_validation->set_message('password_check','Password salah!');
-        var_dump($user_detail);
 
 			return FALSE;
 		}
