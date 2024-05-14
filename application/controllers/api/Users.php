@@ -647,8 +647,6 @@ class Users extends RestController {
         try {
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('nama', 'Nama', 'required');
-            $this->form_validation->set_rules('no_hp', 'Phone Number', 'required');
-            $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
             
             if (!empty($this->input->post('old_password'))) {
                 $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
