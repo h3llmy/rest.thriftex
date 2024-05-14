@@ -206,7 +206,7 @@ class Users extends RestController {
             $data['username'] = generate_username($payload_array['name']);
             $data['password'] = '';
             $data['email'] = $payload_array['email'];
-            $data['foto'] = $payload_array['picture'];
+            $data['foto'] = $payload_array['picture'] ?? "";
             $data['role'] = 'user';
             $data['register_tipe'] = 'google';
             $data['validator_kategori_id'] = 0;
