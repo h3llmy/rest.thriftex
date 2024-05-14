@@ -19,6 +19,7 @@ class SConfig
     var $_frontend_url = 'https://google.com';
     var $_site_url = 'http://localhost/rest.thriftex/api';
 
+
     var $_app_mode = 'development';
     var $_host_name = 'localhost';
     var $_database_name = 'thriftex';

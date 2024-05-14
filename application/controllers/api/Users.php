@@ -96,7 +96,6 @@ class Users extends RestController {
             $update_data['email'] = $this->input->post('email');
         }
         if ($this->input->post('validator_brand_id')) {
-            var_dump($this->input->post('validator_brand_id'));
             $update_data['validator_brand_id'] = $this->input->post('validator_brand_id');
         }
     
@@ -187,95 +186,189 @@ class Users extends RestController {
         }
 	}
 
-    public function googleauth_post(){
-        $post = $this->input->post();
-        $email = $this->input->post('email_address');
-        if(isset($email)){
-            $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin'));
-            if(!empty($cek_email)){
+    public function googleauth_post() {
+        $jwt = $this->input->request_headers()['Authorization'];
+        $jwt_parts = explode('.', $jwt);
+        $payload = base64_decode($jwt_parts[1]);
+        $payload_array = json_decode($payload, true);
+        if (empty($payload_array)) {
+            return $this->response([
+                'status' => false,
+                'message' => 'gagal login'
+            ], 400);
+        }
+
+        $cek_email = $this->user->get_by(array('email' => $payload_array['email']),1,NULL,TRUE,array('id','nama','foto','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'register_tipe', 'gid'));
+        
+        if (empty($cek_email)) {
+            // register new user
+            $data['nama'] = $payload_array['name'];
+            $data['username'] = generate_username($payload_array['name']);
+            $data['password'] = '';
+            $data['email'] = $payload_array['email'];
+            $data['foto'] = $payload_array['picture'] ?? "";
+            $data['role'] = 'user';
+            $data['register_tipe'] = 'google';
+            $data['validator_kategori_id'] = 0;
+            $data['user_code'] = intCodeRandom(4);
+            $data['gid'] = $payload_array['sub'];
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $register = $this->user->insert($data);
+            if($register){
+                $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id', 'jenis_kelamin','user_code'));
                 $token_data = array(
                     'user_id'   => $cek_email->id,
                     'nama'  => $cek_email->nama,
                     'username' => $cek_email->username,
                     'email'  => $cek_email->email,
                     'role'  => $cek_email->role,
-                    'foto'  => $cek_email->foto,
+                    'jenis_kelamin'  => $cek_email->jenis_kelamin,
                     'validator_brand_id'    => $cek_email->validator_brand_id,
                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
-                    'user_code' => $cek_email->user_code,
-                    'no_hp'  => (!empty($this->cek_email->no_hp))?$this->cek_email->no_hp:'-',
-                    'jenis_kelamin'  => (!empty($this->cek_email->jenis_kelamin))?$this->cek_email->jenis_kelamin:'-',
+                    'user_code' => $cek_email->user_code
                 );
                 $token = $this->authorization_token->generateToken($token_data);
-                //update user info to google account
-                $update_akun_user_to_google = array(
-                    'foto'  => $post['profile_picture'],
-                    'register_tipe' => 'google',
-                    'gid' => $post['gid'],
-                    'updated_at' => date('Y-m-d H:i:s')
-                );
-                $this->user->update($update_akun_user_to_google,array('email'=>$email));
-                $this->response([
+                $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+                return $this->response([
                     'status' => true,
                     'uid'   => $cek_email->id,
                     'message'   => 'Login Berhasil!',
-                    'token'  => $token
+                    'access_token'  => $token,
+                    'refresh_token' => $token_refresh
                 ],200);
-                // if($cek_email == 'google'){
-                // }else{
-                //     $this->response([
-                //         'status' => false,
-                //         'message'   => 'Maaf, akun email anda terdaftar manual ',
-                //     ],200);
-                // }
-            }else{
-                //register new email
-                $data['nama'] = $post['full_name'];
-                $data['username'] = generate_username($post['full_name']);
-                $data['password'] = '';
-                $data['email'] = $email;
-                $data['foto'] = $post['profile_picture'];
-                $data['role'] = 'user';
-                $data['register_tipe'] = 'google';
-                $data['validator_kategori_id'] = 0;
-                $data['user_code'] = intCodeRandom(4);
-                $data['gid'] = $post['gid'];
-                $data['updated_at'] = date('Y-m-d H:i:s');
-
-                $register = $this->user->insert($data);
-                if($register){
-                    $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code'));
-                    $token_data = array(
-                        'user_id'   => $cek_email->id,
-                        'nama'  => $cek_email->nama,
-                        'username' => $cek_email->username,
-                        'email'  => $cek_email->email,
-                        'role'  => $cek_email->role,
-                        'validator_brand_id'    => $cek_email->validator_brand_id,
-                        'validator_kategori_id'    => $cek_email->validator_kategori_id,
-                        'user_code' => $cek_email->user_code
-                    );
-                    $token = $this->authorization_token->generateToken($token_data);
-                    $this->response([
-                        'status' => true,
-                        'uid'   => $cek_email->id,
-                        'message'   => 'Login Berhasil!',
-                        'token'  => $token
-                    ],200);
-                }else{
-                    $this->response([
-                        'status' => false,
-                        'message'   => 'Gagal, silahkan ulangi kembali',
-                        'data'  => []
-                    ],500);
-                }
             }
-            // $this->response([
-            //     'status' => false,
-            //     'email'   => '$cek_email',
-            // ]);
+        } else {
+            // check existing user
+            if ($cek_email->register_tipe != 'google') {
+                return $this->response([
+                    'status' => false,
+                    'message' => 'gagal login'
+                ], 400);
+            }
+            if ($cek_email->gid != $payload_array['sub']) {
+                return $this->response([
+                    'status' => false,
+                    'message' => 'gagal login'
+                ], 400);
+            }
+            $token_data = array(
+                'user_id'   => $cek_email->id,
+                'nama'  => $cek_email->nama,
+                'username' => $cek_email->username,
+                'email'  => $cek_email->email,
+                'role'  => $cek_email->role,
+                'foto'  => $cek_email->foto,
+                'validator_brand_id'    => $cek_email->validator_brand_id,
+                'validator_kategori_id'    => $cek_email->validator_kategori_id,
+                'user_code' => $cek_email->user_code,
+                'no_hp'  => (!empty($cek_email->no_hp))?$cek_email->no_hp:'-',
+                'jenis_kelamin'  => (!empty($cek_email->jenis_kelamin))?$cek_email->jenis_kelamin:'-',
+            );
+            $token = $this->authorization_token->generateToken($token_data);
+            $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+            return $this->response([
+                'status' => true,
+                'uid'   => $cek_email->id,
+                'message'   => 'Login Berhasil!',
+                'access_token'  => $token,
+                'refresh_token' => $token_refresh
+            ],200);
         }
     }
+
+    // public function googleauth_post(){
+    //     $post = $this->input->post();
+    //     $email = $this->input->post('email_address');
+    //     if(isset($email)){
+    //         $cek_email = $this->user->get_by(array('email' => $email),1,NULL,TRUE,array('id','nama','foto','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin'));
+    //         if(!empty($cek_email)){
+    //             $token_data = array(
+    //                 'user_id'   => $cek_email->id,
+    //                 'nama'  => $cek_email->nama,
+    //                 'username' => $cek_email->username,
+    //                 'email'  => $cek_email->email,
+    //                 'role'  => $cek_email->role,
+    //                 'foto'  => $cek_email->foto,
+    //                 'validator_brand_id'    => $cek_email->validator_brand_id,
+    //                 'validator_kategori_id'    => $cek_email->validator_kategori_id,
+    //                 'user_code' => $cek_email->user_code,
+    //                 'no_hp'  => (!empty($this->cek_email->no_hp))?$this->cek_email->no_hp:'-',
+    //                 'jenis_kelamin'  => (!empty($this->cek_email->jenis_kelamin))?$this->cek_email->jenis_kelamin:'-',
+    //             );
+    //             $token = $this->authorization_token->generateToken($token_data);
+    //             $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+    //             //update user info to google account
+    //             $update_akun_user_to_google = array(
+    //                 'foto'  => $post['profile_picture'],
+    //                 'register_tipe' => 'google',
+    //                 'gid' => $post['gid'],
+    //                 'updated_at' => date('Y-m-d H:i:s')
+    //             );
+    //             $this->user->update($update_akun_user_to_google,array('email'=>$email));
+    //             $this->response([
+    //                 'status' => true,
+    //                 'uid'   => $cek_email->id,
+    //                 'message'   => 'Login Berhasil!',
+    //                 'token'  => $token,
+    //                 'refresh_token' => $token_refresh
+    //             ],200);
+    //             // if($cek_email == 'google'){
+    //             // }else{
+    //             //     $this->response([
+    //             //         'status' => false,
+    //             //         'message'   => 'Maaf, akun email anda terdaftar manual ',
+    //             //     ],200);
+    //             // }
+    //         }else{
+    //             //register new email
+    //             $data['nama'] = $post['full_name'];
+    //             $data['username'] = generate_username($post['full_name']);
+    //             $data['password'] = '';
+    //             $data['email'] = $email;
+    //             $data['foto'] = $post['profile_picture'];
+    //             $data['role'] = 'user';
+    //             $data['register_tipe'] = 'google';
+    //             $data['validator_kategori_id'] = 0;
+    //             $data['user_code'] = intCodeRandom(4);
+    //             $data['gid'] = $post['gid'];
+    //             $data['updated_at'] = date('Y-m-d H:i:s');
+
+    //             $register = $this->user->insert($data);
+    //             if($register){
+    //                 $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code'));
+    //                 $token_data = array(
+    //                     'user_id'   => $cek_email->id,
+    //                     'nama'  => $cek_email->nama,
+    //                     'username' => $cek_email->username,
+    //                     'email'  => $cek_email->email,
+    //                     'role'  => $cek_email->role,
+    //                     'validator_brand_id'    => $cek_email->validator_brand_id,
+    //                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
+    //                     'user_code' => $cek_email->user_code
+    //                 );
+    //                 $token = $this->authorization_token->generateToken($token_data);
+    //                 $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
+    //                 $this->response([
+    //                     'status' => true,
+    //                     'uid'   => $cek_email->id,
+    //                     'message'   => 'Login Berhasil!',
+    //                     'token'  => $token,
+    //                     'refresh_token' => $token_refresh
+    //                 ],200);
+    //             }else{
+    //                 $this->response([
+    //                     'status' => false,
+    //                     'message'   => 'Gagal, silahkan ulangi kembali',
+    //                     'data'  => []
+    //                 ],500);
+    //             }
+    //         }
+    //         // $this->response([
+    //         //     'status' => false,
+    //         //     'email'   => '$cek_email',
+    //         // ]);
+    //     }
+    // }
 
     public function login_post(){
 
@@ -384,7 +477,6 @@ class Users extends RestController {
 			}
 		}else{
 			$this->form_validation->set_message('password_check','Password salah!');
-        var_dump($user_detail);
 
 			return FALSE;
 		}
@@ -555,8 +647,6 @@ class Users extends RestController {
         try {
             $this->form_validation->set_rules('username', 'Username', 'required');
             $this->form_validation->set_rules('nama', 'Nama', 'required');
-            $this->form_validation->set_rules('no_hp', 'Phone Number', 'required');
-            $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required');
             
             if (!empty($this->input->post('old_password'))) {
                 $this->form_validation->set_rules('old_password', 'Old Password', 'required|callback_password_check');
@@ -787,30 +877,9 @@ class Users extends RestController {
             $update = $this->user->update($update_data, array('id' => $decodedToken['data']->id));
     
             if ($update) {
-                $cek_email = $this->user->get_by(array('id' => $decodedToken['data']->id),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code','no_hp','jenis_kelamin', 'foto', 'is_active'));
-                $token_data = array(
-                    'user_id'   => $cek_email->id,
-                    'nama'  => $cek_email->nama,
-                    'username' => $cek_email->username,
-                    'email'  => $cek_email->email,
-                    'role'  => $cek_email->role,
-                    'foto'  => $cek_email->foto,
-                    'no_hp'  => $cek_email->no_hp,
-                    'jenis_kelamin'  => $cek_email->jenis_kelamin,
-                    'validator_brand_id'    => $cek_email->validator_brand_id,
-                    'validator_kategori_id'    => $cek_email->validator_kategori_id,
-                    'user_code' => $cek_email->user_code
-                );
-    
-                $token = $this->authorization_token->generateToken($token_data);
-                $token_refresh = $this->authorization_token->generateTokenRefresh($token_data);
-    
                 $this->response([
                     'status' => true,
-                    'uid'   => $cek_email->id,
-                    'message'   => 'Login Berhasil!',
-                    'access_token'  => $token,
-                    'refresh_token' => $token_refresh
+                    'message'   => 'Update Password Berhasil!',
                 ],200);
             } else {
                 $this->response([
