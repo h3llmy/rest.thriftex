@@ -215,7 +215,7 @@ class Users extends RestController {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $register = $this->user->insert($data);
             if($register){
-                $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id','user_code'));
+                $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id', 'jenis_kelamin','user_code'));
                 $token_data = array(
                     'user_id'   => $cek_email->id,
                     'nama'  => $cek_email->nama,
