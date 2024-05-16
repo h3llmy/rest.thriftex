@@ -240,18 +240,9 @@ class Legits extends RestController {
     }
 
     public function datadetail_get(){
-        $this->authorization_token->authtoken();
-        $headers = $this->input->request_headers();
-        $decodedToken = $this->authorization_token->validateToken($headers['Authorization']);
-
         $case_code = $this->get('case_code');
-        $user_id = $decodedToken['data']->user_id;
-        $dataLegit = NULL;
-        if ($decodedToken['data']->role == 'admin' || $decodedToken['data']->role == 'validator') {
-            $dataLegit = $this->legit->getLegitListUserDetail(NULL, $case_code);
-        } else {
-            $dataLegit = $this->legit->getLegitListUserDetail($user_id,$case_code);
-        }
+        $dataLegit = $this->legit->getLegitListUserDetail(NULL, $case_code);
+
         if(!empty($dataLegit)){
             foreach ($dataLegit as $key) {
                 if($key->check_result == 'processing'){
