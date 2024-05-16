@@ -215,7 +215,7 @@ class Users extends RestController {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $register = $this->user->insert($data);
             if($register){
-                $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id', 'jenis_kelamin','user_code'));
+                $cek_email = $this->user->get_by(array('id' => $register),1,NULL,TRUE,array('id','nama','username','password','email','role','register_tipe','validator_brand_id','validator_kategori_id', 'jenis_kelamin','user_code', 'register_tipe'));
                 $token_data = array(
                     'user_id'   => $cek_email->id,
                     'nama'  => $cek_email->nama,
@@ -223,6 +223,7 @@ class Users extends RestController {
                     'email'  => $cek_email->email,
                     'role'  => $cek_email->role,
                     'jenis_kelamin'  => $cek_email->jenis_kelamin,
+                    'register_tipe'  => $cek_email->register_tipe,
                     'validator_brand_id'    => $cek_email->validator_brand_id,
                     'validator_kategori_id'    => $cek_email->validator_kategori_id,
                     'user_code' => $cek_email->user_code
@@ -258,6 +259,7 @@ class Users extends RestController {
                 'email'  => $cek_email->email,
                 'role'  => $cek_email->role,
                 'foto'  => $cek_email->foto,
+                'register_tipe'  => $cek_email->register_tipe,
                 'validator_brand_id'    => $cek_email->validator_brand_id,
                 'validator_kategori_id'    => $cek_email->validator_kategori_id,
                 'user_code' => $cek_email->user_code,
@@ -413,6 +415,7 @@ class Users extends RestController {
                 'role'  => $this->user_detail->role,
                 'foto'  => $this->user_detail->foto,
                 'no_hp'  => $this->user_detail->no_hp,
+                'register_tipe'  => $this->user_detail->register_tipe,
                 'jenis_kelamin'  => $this->user_detail->jenis_kelamin,
                 'validator_brand_id'    => $this->user_detail->validator_brand_id,
                 'validator_kategori_id'    => $this->user_detail->validator_kategori_id,
@@ -451,6 +454,7 @@ class Users extends RestController {
             'role'  => $decodedToken['data']->role,
             'foto'  => $decodedToken['data']->foto,
             'no_hp'  => $decodedToken['data']->no_hp,
+            'register_tipe'  => $decodedToken['data']->register_tipe,
             'jenis_kelamin'  => $decodedToken['data']->jenis_kelamin,
             'validator_brand_id'    => $decodedToken['data']->validator_brand_id,
             'validator_kategori_id'    => $decodedToken['data']->validator_kategori_id,
@@ -512,6 +516,7 @@ class Users extends RestController {
             $subjek = 'Reset Password';
             $send = $this->smtp->SendEmail($user->email,$subjek,$html);
             
+            var_dump($send);
             $this->response([
                 'message' => 'success'
             ], 200);
@@ -716,6 +721,7 @@ class Users extends RestController {
                 'role' => $user_detail->role,
                 'no_hp' => $user_detail->no_hp,
                 'foto' => $user_detail->foto,
+                'register_tipe'  => $cek_email->register_tipe,
                 'jenis_kelamin' => $user_detail->jenis_kelamin,
                 'validator_brand_id' => $user_detail->validator_brand_id,
                 'validator_kategori_id' => $user_detail->validator_kategori_id,
